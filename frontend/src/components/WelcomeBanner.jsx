@@ -1,6 +1,6 @@
 import { Plus, UserPlus } from "lucide-react";
 
-export default function WelcomeBanner() {
+export default function WelcomeBanner({user}) {
   const today = new Date().toLocaleDateString("en-GB", {
     weekday: "long",
     day: "numeric",

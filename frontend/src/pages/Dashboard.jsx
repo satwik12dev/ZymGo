@@ -20,7 +20,14 @@ import {
   UserX,
 } from "lucide-react";
 
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 export default function Dashboard() {
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
   const stats = [
     {
       title: "Total Gyms",
@@ -85,7 +92,41 @@ export default function Dashboard() {
       growth: "-3%",
       positive: false,
     },
+
+    
   ];
+
+  useEffect(() => {
+  const fetchDashboard = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        navigate("/");
+        return;
+      }
+
+      const res = await axios.get(
+        "http://localhost:3000/admin/dashboard",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setUser(res.data.data);
+    } catch (error) {
+      console.error(error);
+
+      localStorage.removeItem("token");
+      navigate("/");
+    }
+  };
+
+  fetchDashboard();
+}, [navigate]);
+
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -101,7 +142,7 @@ export default function Dashboard() {
         <Navbar />
 
         <main className="p-6 space-y-6">
-            <WelcomeBanner />
+            <WelcomeBanner user={user} />
 
 
           {/* Stats */}

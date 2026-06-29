@@ -14,7 +14,23 @@ import {
     ChevronRight,
     ChevronDown,
 } from "lucide-react";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
+import { useNavigate } from "react-router-dom";
+import axios from "axios"
+
+const admin = JSON.parse(localStorage.getItem("admin"));
+const role = admin?.role;
 const menuItems = [
     {
         title: "Dashboard",
@@ -104,14 +120,14 @@ const menuItems = [
         path: "/reports",
     },
     {
-        title: "Administration",
-        icon: ShieldCheck,
-        children: [
-            { title: "Admins", path: "/administration/admins" },
-            { title: "Roles & Permissions", path: "/administration/roles&permissions" },
-            { title: "Audit Trail", path: "/administration/audittrail" },
-        ],
-    },
+    title: "Administration",
+    icon: ShieldCheck,
+    children: [
+        { title: "Admins", path: "/administration/admins" },
+        { title: "Roles & Permissions", path: "/administration/roles&permissions" },
+        { title: "Audit Trail", path: "/administration/audittrail" }
+        ]
+},
     {
         title: "Settings",
         icon: Settings,
@@ -126,6 +142,36 @@ const menuItems = [
 
 export default function Sidebar() {
     const [openMenu, setOpenMenu] = useState("Members");
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        try {
+            const token = localStorage.getItem("token");
+
+            await axios.post(
+                "http://localhost:3000/admin/logout",
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            localStorage.removeItem("token");
+            localStorage.removeItem("admin");
+
+            navigate("/")
+        } catch (error) {
+            console.error(error);
+
+            // Clear local storage even if API fails
+            localStorage.removeItem("token");
+            localStorage.removeItem("admin");
+
+            navigate("/");
+        }
+    };
 
     return (
         <aside className="fixed left-0 top-0 h-screen w-64 bg-[#111827] border-r border-gray-800 flex flex-col">
@@ -182,8 +228,8 @@ export default function Sidebar() {
                                             )
                                         }
                                         className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg transition-all duration-200 ${openMenu === item.title
-                                                ? "bg-gray-800 text-white"
-                                                : "text-gray-300 hover:bg-gray-800 hover:text-white"
+                                            ? "bg-gray-800 text-white"
+                                            : "text-gray-300 hover:bg-gray-800 hover:text-white"
                                             }`}
                                     >
 
@@ -207,8 +253,8 @@ export default function Sidebar() {
 
                                     <div
                                         className={`overflow-hidden transition-all duration-300 ${openMenu === item.title
-                                                ? "max-h-96"
-                                                : "max-h-0"
+                                            ? "max-h-96"
+                                            : "max-h-0"
                                             }`}
                                     >
 
@@ -300,28 +346,56 @@ export default function Sidebar() {
 
                 </div>
 
-                <button className="mt-4 w-full flex items-center justify-center gap-2 rounded-lg bg-gray-800 hover:bg-red-600 text-gray-300 hover:text-white py-2.5 transition">
+                <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                        <button className="mt-4 w-full flex items-center justify-center gap-2 rounded-lg bg-gray-800 hover:bg-red-600 text-gray-300 hover:text-white py-2.5 transition">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="w-4 h-4"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2h5a2 2 0 012 2v1"
+                                />
+                            </svg>
 
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-4 h-4"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2h5a2 2 0 012 2v1"
-                        />
-                    </svg>
+                            <span className="text-sm font-medium">
+                                Logout
+                            </span>
+                        </button>
+                    </AlertDialogTrigger>
 
-                    <span className="text-sm font-medium">
-                        Logout
-                    </span>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>
+                                Confirm Logout
+                            </AlertDialogTitle>
 
-                </button>
+                            <AlertDialogDescription>
+                                Are you sure you want to logout? You will need to login again to access
+                                the dashboard.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+
+                        <AlertDialogFooter>
+                            <AlertDialogCancel>
+                                Cancel
+                            </AlertDialogCancel>
+
+                            <AlertDialogAction
+                                onClick={handleLogout}
+                                className="bg-red-600 hover:bg-red-700"
+                            >
+                                Logout
+                            </AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
 
             </div>
 

@@ -9,13 +9,9 @@ const Login = async (req, res) => {
 
         // Find user
         const [users] = await pool.query(
-            `SELECT u.*, r.role_name
-             FROM users u
-             JOIN roles r ON u.role_id = r.id
-             WHERE u.email = ?`,
+            `SELECT u.id, u.name, u.email, u.password, u.status, u.role_id, r.role_name FROM users u JOIN roles r ON u.role_id=r.id WHERE u.email=?`,
             [email]
         );
-
         if (users.length === 0) {
             return res.status(404).json({
                 success: false,
@@ -120,7 +116,12 @@ const Login = async (req, res) => {
             [ip, user.id]
         );
 
-        const token = generateToken(user.id, user.email, user.role_id);
+        const token = generateToken(user.id, user.email, user.role_id, user.role_name);
+
+        await pool.query(
+            "UPDATE users SET token = ? WHERE id = ?",
+            [token, user.id]
+        );
 
         return res.status(200).json({
             success: true,
