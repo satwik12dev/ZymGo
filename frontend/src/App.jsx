@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import AuditTrail from "./pages/administration/audittrial";
-
+import GymList from "./pages/gym/GymList";
 
 function App() {
   return (
@@ -13,8 +13,10 @@ function App() {
           path="/dashboard" element= {<Dashboard />} />
         <Route
           path="/administration/audittrail"
-          element={ <AuditTrail />}
+          element={ <AuditTrail />
+          }
         />
+         <Route path="/members/gyms" element={<GymList />}/>
       </Routes>
     </BrowserRouter>
   );

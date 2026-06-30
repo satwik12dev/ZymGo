@@ -129,27 +129,29 @@ export default function Dashboard() {
 
 
   return (
-    <div className="min-h-screen bg-gray-100">
+  <div className="min-h-screen bg-[#F5F7FB]">
 
-      {/* Sidebar */}
+    {/* Sidebar */}
+    <Sidebar />
 
-      <Sidebar />
+    {/* Main Content */}
+    <div className="pt-16 lg:pt-0 lg:ml-[320px] transition-all duration-300">
 
-      {/* Main Content */}
+      {/* Navbar */}
+      <Navbar />
 
-      <div className="ml-64">
+      {/* Dashboard */}
+      <main className="p-4 sm:p-6 lg:p-8">
 
-        <Navbar />
+        <div className="max-w-[1700px] mx-auto space-y-7">
 
-        <main className="p-6 space-y-6">
-            <WelcomeBanner user={user} />
-
+          <WelcomeBanner user={user} />
 
           {/* Stats */}
 
           <section>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
 
               {stats.slice(0, 4).map((item) => (
                 <StatCard
@@ -160,7 +162,7 @@ export default function Dashboard() {
 
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-5">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
 
               {stats.slice(4).map((item) => (
                 <StatCard
@@ -173,11 +175,11 @@ export default function Dashboard() {
 
           </section>
 
-          {/* Revenue + Subscription */}
+          {/* Charts */}
 
-          <section className="grid grid-cols-1 xl:grid-cols-3 gap-6 items-stretch">
+          <section className="grid grid-cols-1 2xl:grid-cols-3 gap-6">
 
-            <div className="xl:col-span-2">
+            <div className="2xl:col-span-2">
 
               <RevenueChart />
 
@@ -189,17 +191,13 @@ export default function Dashboard() {
 
           {/* Quick Actions */}
 
-          <section>
+          <QuickActions />
 
-            <QuickActions />
+          {/* Payments */}
 
-          </section>
+          <section className="grid grid-cols-1 2xl:grid-cols-3 gap-6">
 
-          {/* Recent Payments */}
-
-          <section className="grid grid-cols-1 xl:grid-cols-3 gap-6 items-stretch">
-
-            <div className="xl:col-span-2">
+            <div className="2xl:col-span-2">
 
               <RecentPayments />
 
@@ -209,11 +207,11 @@ export default function Dashboard() {
 
           </section>
 
-          {/* Recent Owners */}
+          {/* Owners */}
 
-          <section className="grid grid-cols-1 xl:grid-cols-3 gap-6 items-stretch">
+          <section className="grid grid-cols-1 2xl:grid-cols-3 gap-6">
 
-            <div className="xl:col-span-2">
+            <div className="2xl:col-span-2">
 
               <RecentOwners />
 
@@ -223,10 +221,12 @@ export default function Dashboard() {
 
           </section>
 
-        </main>
+        </div>
 
-      </div>
+      </main>
 
     </div>
-  );
+
+  </div>
+);
 }

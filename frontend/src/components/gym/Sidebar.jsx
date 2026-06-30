@@ -325,7 +325,6 @@ lg:translate-x-0
                   </div>
 
 
-
               );
 
             })}

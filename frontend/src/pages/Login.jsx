@@ -29,9 +29,6 @@ export default function Login() {
     localStorage.setItem("token", res.data.token);
 localStorage.setItem("user", JSON.stringify(res.data.user));
 
-console.log("Token after save:", localStorage.getItem("token"));
-console.log("User after save:", localStorage.getItem("user"));
-
 navigate("/dashboard");
   } catch (err) {
     console.error(err);
