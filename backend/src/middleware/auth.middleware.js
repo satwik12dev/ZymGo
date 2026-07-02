@@ -2,7 +2,6 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
 const authenticate = (req, res, next) => {
-    console.log("Authorization Header:", req.headers.authorization);
 
     const authHeader = req.headers.authorization;
 
@@ -12,13 +11,11 @@ const authenticate = (req, res, next) => {
             message: "Token not provided"
         });
     }
-
+    
     const token = authHeader.split(" ")[1];
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-        console.log("Decoded:", decoded);
 
         req.user = decoded;
         next();
