@@ -18,12 +18,33 @@ const uploadCsv = require("./middleware/uploadCsv.middleware");
 const {bulkUploadGym } = require("./controller/gym/BulkAddGym.controller");
 
 
-const {getAllSubscriptionPlans} = require("./controller/Subscription/subscriptionPlan.controller")
+const {getAllSubscriptionPlans, buyGymSubscription, getGymSubscriptionStatus} = require("./controller/Subscription/subscriptionPlan.controller")
 const addSubscriptionPlan = require("./controller/Subscription/AddPlans.controller")
 const editSubscriptionPlan = require("./controller/Subscription/EditSubscriptionPlan.controller")
 const deleteSubscriptionPlan = require("./controller/Subscription/DeletePLans.controller")
+const {
+  getSubscriptionAuditSummary,
+  getSubscriptionAuditLogs,
+  getSubscriptionAuditAdmins,
+  getSubscriptionAuditfindLogs
+} = require("./controller/Subscription/SubscriptionAudit.controller");
+
 
 const authorize = require("./middleware/roles.middleware")
+const bannerUpload = require("./middleware/bannerUpload.middleware")
+
+
+const { addBanner } = require("./controller/content/AddBanner.controller")
+const updateBanner  = require("./controller/content/updateBanner.controller")
+const getAllBanners = require("./controller/content/getAllBanners.controller")
+const upload = require("./middleware/Category.middleware");
+const {
+  addCategory,
+  getCategories,
+  getCategoryById,
+  updateCategory,
+  deleteCategory,
+} = require("./controller/content/Category.controller");
 route.use(express.json())
 route.use(cors())
 route.set("trust proxy", true), 
@@ -127,16 +148,76 @@ route.delete("/subscription/deleteplan/:id", authenticate, authorize("Super Admi
  * @route /gym/subscription-audit
  * @description
  */
+route.get(
+  "/subscription-audit/summary",
+  authenticate,
+  authorize("Super Admin"),
+  getSubscriptionAuditSummary
+);
 
+/**
+ * @route /gym/subscription-audit/admins
+ * @description
+ */
+route.get(
+  "/subscription-audit/admins",
+  authenticate,
+  authorize("Super Admin"),
+  getSubscriptionAuditAdmins
+);
 
+/**
+ * @route /gym/subscription-audit
+ * @description
+ */
+route.get(
+  "/subscription-audit",
+  authenticate,
+  authorize("Super Admin"),
+  getSubscriptionAuditLogs
+);
+
+/**
+ * @route /gym/subscription-audit/find
+ * @description
+ */
+
+route.get(
+  "/subscription-audit/find",
+  authenticate,
+  authorize("Super Admin"),
+  getSubscriptionAuditfindLogs
+);
+
+/**
+ * @route /gym-subscription/buy
+ * @description
+ */
+route.post(
+  "/gym-subscription/buy",
+  authenticate,
+  buyGymSubscription
+);
+ 
+/**
+ *  @route /gym-subscription/status/:gym_id
+ *  @description
+ */
+route.get(
+  "/gym-subscription/status/:gym_id",
+  authenticate,
+  authorize("Super Admin", "Admin"),
+  getGymSubscriptionStatus
+);
 /*****************************************************
                     FINANCE API's
 *******************************************************/
-
 /**
  * @route /finance/invoices
  * @description
  */
+
+
 
 /**
  * @route /finance/reports
@@ -160,21 +241,29 @@ route.delete("/subscription/deleteplan/:id", authenticate, authorize("Super Admi
 *******************************************************/
 
 /**
- * @route /banner/all-banners
- * @description
- */
-
-
-/**
  * @route /banner/add-banners
  * @description
  */
+route.post(
+  "/banner/add-banner",
+  authenticate,
+  bannerUpload.single("banner_file"),
+  addBanner
+);
 
 /**
- * @route /banner/update-banners
+ * @route /banner/all-banners
  * @description
  */
+route.get("/banner/all-banners",authenticate,authorize("Super Admin"), getAllBanners)
 
+
+
+/**
+ * @route /banner/update-banners/:id
+ * @description
+ */
+route.patch("/banner/update-banners/:id", authenticate,bannerUpload.single("banner_file"), updateBanner)
 
 /*****************************************************
                     CATEGORIES API's
@@ -184,11 +273,32 @@ route.delete("/subscription/deleteplan/:id", authenticate, authorize("Super Admi
  * @route /categories/add-category
  * @description
  */
+route.post("/categories/add-category",authenticate, upload.single("image"), addCategory);
 
 /**
  * @route /categories/all-category
  * @description
  */
+route.get("/categories/get-categories", authenticate, getCategories);
+
+/**
+ * @route /categories/get-category/:id
+ * @description
+ */
+route.get("/categories/get-category/:id", authenticate, getCategoryById);
+
+
+/**
+ * @route /categories/update-category/:id
+ * @description
+ */
+route.patch("/categories/update-category/:id", authenticate, upload.single("image"), updateCategory);
+
+/**
+ * @route /categories/delete-category/:id
+ * @description
+ */
+route.delete("/categories/delete-category/:id", authenticate, deleteCategory);
 
 /**
  * @route /categories/add-sub-category
@@ -199,6 +309,7 @@ route.delete("/subscription/deleteplan/:id", authenticate, authorize("Super Admi
  * @route /categories/all-sub-category
  * @description
  */
+
 
 
 /*****************************************************
