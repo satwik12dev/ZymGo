@@ -45,6 +45,25 @@ const {
   updateCategory,
   deleteCategory,
 } = require("./controller/content/Category.controller");
+
+const {
+  addSubCategory,
+  getAllSubCategories,
+  getSubCategoryByIdOrName,
+  updateSubCategory,
+  deleteSubCategory,
+} = require("./controller/content/SubCategory.controller");
+const uploadsub = require("./middleware/SubCategory.middleware")
+
+
+const blogUpload = require("./middleware/blogUpload");
+const { addBlog, getAllBlogs, updateBlog, deleteBlog } = require("./controller/blogs/Blog.controller");
+
+const {getGymAnalytics,
+  exportGymAnalyticsSummary,
+  exportGymAnalyticsWithFilters,
+  exportStateAnalyticsCSV } = require("./controller/gym/gymAnalytics.controller")
+
 route.use(express.json())
 route.use(cors())
 route.set("trust proxy", true), 
@@ -148,67 +167,38 @@ route.delete("/subscription/deleteplan/:id", authenticate, authorize("Super Admi
  * @route /gym/subscription-audit
  * @description
  */
-route.get(
-  "/subscription-audit/summary",
-  authenticate,
-  authorize("Super Admin"),
-  getSubscriptionAuditSummary
-);
+route.get("/subscription-audit/summary",authenticate,authorize("Super Admin"),getSubscriptionAuditSummary);
 
 /**
  * @route /gym/subscription-audit/admins
  * @description
  */
-route.get(
-  "/subscription-audit/admins",
-  authenticate,
-  authorize("Super Admin"),
-  getSubscriptionAuditAdmins
-);
+route.get("/subscription-audit/admins",authenticate,authorize("Super Admin"),getSubscriptionAuditAdmins);
 
 /**
  * @route /gym/subscription-audit
  * @description
  */
-route.get(
-  "/subscription-audit",
-  authenticate,
-  authorize("Super Admin"),
-  getSubscriptionAuditLogs
-);
+route.get("/subscription-audit",authenticate,authorize("Super Admin"),getSubscriptionAuditLogs);
 
 /**
  * @route /gym/subscription-audit/find
  * @description
  */
 
-route.get(
-  "/subscription-audit/find",
-  authenticate,
-  authorize("Super Admin"),
-  getSubscriptionAuditfindLogs
-);
+route.get("/subscription-audit/find",authenticate,authorize("Super Admin"),getSubscriptionAuditfindLogs);
 
 /**
  * @route /gym-subscription/buy
  * @description
  */
-route.post(
-  "/gym-subscription/buy",
-  authenticate,
-  buyGymSubscription
-);
+route.post("/gym-subscription/buy",authenticate,buyGymSubscription);
  
 /**
  *  @route /gym-subscription/status/:gym_id
  *  @description
  */
-route.get(
-  "/gym-subscription/status/:gym_id",
-  authenticate,
-  authorize("Super Admin", "Admin"),
-  getGymSubscriptionStatus
-);
+route.get("/gym-subscription/status/:gym_id",authenticate,authorize("Super Admin", "Admin"),getGymSubscriptionStatus);
 /*****************************************************
                     FINANCE API's
 *******************************************************/
@@ -244,12 +234,7 @@ route.get(
  * @route /banner/add-banners
  * @description
  */
-route.post(
-  "/banner/add-banner",
-  authenticate,
-  bannerUpload.single("banner_file"),
-  addBanner
-);
+route.post("/banner/add-banner",authenticate,bannerUpload.single("banner_file"),addBanner);
 
 /**
  * @route /banner/all-banners
@@ -304,13 +289,32 @@ route.delete("/categories/delete-category/:id", authenticate, deleteCategory);
  * @route /categories/add-sub-category
  * @description
  */
+route.post("/categories/add-sub-category", authenticate, uploadsub.single("sub_image"), addSubCategory);
 
 /**
  * @route /categories/all-sub-category
  * @description
  */
+route.get("/categories/get-sub-categories", authenticate, getAllSubCategories);
+
+/**
+ * @route /categories/get-sub-category/:id
+ * @description
+ */
+route.get("/categories/get-sub-category/:idOrName", authenticate, getSubCategoryByIdOrName);
 
 
+/**
+ * @route /categories/update-sub-category/:id
+ * @description
+ */
+route.put("/categories/update-sub-category/:id", authenticate, uploadsub.single("sub_image"), updateSubCategory);
+
+/**
+ * @route /categories/delete-sub-category/:id
+ * @description
+ */
+route.delete("/categories/delete-sub-category/:id", authenticate, deleteSubCategory);
 
 /*****************************************************
                     BLOG MANAGEMENT API's
@@ -320,12 +324,38 @@ route.delete("/categories/delete-category/:id", authenticate, deleteCategory);
  * @route /blog/all-blogs
  * @description
  */
-
+route.get("/blog/all-blogs", authenticate, getAllBlogs);
 
 /**
  * @route /blog/add-new-blog
  * @description
  */
+route.post("/blog/add-blog",authenticate,
+  blogUpload.fields([
+    { name: "feature_image", maxCount: 1 },
+    { name: "additional_images", maxCount: 10 },
+  ]),
+  addBlog
+);
+
+/**
+ * @route /blog/update-blog/:id
+ * @description
+ */
+route.put("/blog/update-blog/:id",authenticate,
+    blogUpload.fields([
+    { name: "feature_image", maxCount: 1 },
+    { name: "additional_images", maxCount: 10 },
+  ]),
+  updateBlog
+);
+
+/**
+ * @route /blog/delete-blog/:id
+ * @description
+ */
+route.delete("/blog/delete-blog/:id",authenticate,deleteBlog);
+
 
 /*****************************************************
                     GYM ANALYTICS API's
@@ -334,8 +364,10 @@ route.delete("/categories/delete-category/:id", authenticate, deleteCategory);
  * @route /gym/analytics/
  * @description
  */
-
-
+route.get("/gym/analytics",authenticate,authorize("Super Admin"),getGymAnalytics);
+route.get("/gym/analytics/export-summary",authenticate,authorize("Super Admin"),exportGymAnalyticsSummary);
+route.get("/gym/analytics/export-with-filters",authenticate,authorize("Super Admin"),exportGymAnalyticsWithFilters);
+route.get("/gym/analytics/export-state-analytics",authenticate,authorize("Super Admin"),exportStateAnalyticsCSV);
 
 /*****************************************************
                     REPORT API's
