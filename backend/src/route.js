@@ -64,6 +64,41 @@ const {getGymAnalytics,
   exportGymAnalyticsWithFilters,
   exportStateAnalyticsCSV } = require("./controller/gym/gymAnalytics.controller")
 
+
+const getReportsDashboard  = require("./controller/reports/report.controller");
+
+
+const {
+createUser,
+getUsers,
+getUserById,
+updateUser,
+getUserStats,
+toggleUserBlock,
+deleteUser,
+getAllPermissions,
+} = require("./controller/admin/userController");
+
+const {
+createRole,
+getRoles,
+getRolePermissions,
+updateRolePermissions,
+updateRole,
+toggleRoleStatus,
+getRoleAssignments,
+assignRoleToUser,
+getUserPermissions,
+deleteRole,
+} = require("./controller/admin/roles&permission.controller");
+
+const {
+  getAuditLogs,
+  getAuditFilterOptions,
+  getAuditStats,
+} = require("./controller/admin/auditTrail.controller");
+
+
 route.use(express.json())
 route.use(cors())
 route.set("trust proxy", true), 
@@ -377,19 +412,104 @@ route.get("/gym/analytics/export-state-analytics",authenticate,authorize("Super 
  * @description
  */
 
+route.get(
+  "/gym/report",
+  authenticate,
+  authorize("Super Admin", "Admin"),
+  getReportsDashboard
+);
+
 /*****************************************************
                     ADMINISTRATION API's
 *******************************************************/
 
 /**
- * @route /admin/users
+ * @route /admin/user
  * @description
  */
+/*****************************************************
+ADMINISTRATION API's
+*******************************************************/
 
-/**
- * @route /admin/roles&permissions
- * @description
- */
+/* ================= USER MANAGEMENT ================= */
+
+route.post("/admin/Createusers", authenticate, authorize("Super Admin"), createUser);
+
+route.get("/admin/Getusers", authenticate, authorize("Super Admin"), getUsers);
+
+route.get("/admin/users/stats", authenticate, authorize("Super Admin"), getUserStats);
+
+route.get("/admin/getusersById/:id", authenticate, authorize("Super Admin"), getUserById);
+
+route.put("/admin/Updateusers/:id", authenticate, authorize("Super Admin"), updateUser);
+
+route.patch("/admin/Toggleusers/:id", authenticate, authorize("Super Admin"), toggleUserBlock);
+
+route.delete("/admin/Deleteusers/:id", authenticate, authorize("Super Admin"), deleteUser);
+
+/* ================= ROLE MANAGEMENT ================= */
+
+route.post("/admin/Createroles", authenticate, authorize("Super Admin"), createRole);
+
+route.get("/admin/Getroles", authenticate, authorize("Super Admin"), getRoles);
+
+route.put("/admin/Updateroles/:roleId", authenticate, authorize("Super Admin"), updateRole);
+
+route.patch("/admin/Toggleroles/:roleId", authenticate, authorize("Super Admin"), toggleRoleStatus);
+
+route.delete("/admin/Deleteroles/:roleId", authenticate, authorize("Super Admin"), deleteRole);
+
+/* ================= ROLE PERMISSIONS ================= */
+
+// Get all permissions with assigned true/false for selected role
+route.get(
+"/admin/GetrolesPermissions/:roleId",
+authenticate,
+authorize("Super Admin"),
+getRolePermissions
+);
+
+// Update permissions of selected role
+route.put(
+"/admin/UpdaterolesPermissions/:roleId",
+authenticate,
+authorize("Super Admin"),
+updateRolePermissions
+);
+
+// Get all permission master data
+route.get(
+"/admin/Getallpermissions",
+authenticate,
+authorize("Super Admin"),
+getAllPermissions
+);
+
+/* ================= ROLE ASSIGNMENTS ================= */
+
+// User list with role and permission count
+route.get(
+"/admin/Getrole-assignments",
+authenticate,
+authorize("Super Admin"),
+getRoleAssignments
+);
+
+// Quick role change for a user
+route.patch(
+"/admin/Updateusers/:userId/role",
+authenticate,
+authorize("Super Admin"),
+assignRoleToUser
+);
+
+// Get permissions inherited by one user
+route.get(
+"/admin/GetusersPermissions/:userId",
+authenticate,
+authorize("Super Admin"),
+getUserPermissions
+);
 
 /**
  * @route /admin/auditTrial
@@ -398,6 +518,28 @@ route.get("/gym/analytics/export-state-analytics",authenticate,authorize("Super 
  */
 
 
+route.get(
+  "/admin/audit-trail/stats",
+  authenticate,
+  authorize("Super Admin"),
+  getAuditStats
+);
+
+// Audit table with search, filters and pagination
+route.get(
+  "/admin/audit-trail",
+  authenticate,
+  authorize("Super Admin"),
+  getAuditLogs
+);
+
+// Dropdown/filter data: actions, statuses and users
+route.get(
+  "/admin/audit-trail/filters",
+  authenticate,
+  authorize("Super Admin"),
+  getAuditFilterOptions
+);
 /*****************************************************
                     SETTINGS API's
 *******************************************************/

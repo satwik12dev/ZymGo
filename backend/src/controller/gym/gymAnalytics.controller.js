@@ -702,6 +702,7 @@ const exportStateAnalyticsCSV = async (req, res) => {
     });
   }
 };
+
 module.exports = {
   getGymAnalytics,
   exportGymAnalyticsSummary,

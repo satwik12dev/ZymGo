@@ -3,20 +3,14 @@ const authorize = (...allowedRoles) => {
     if (!req.user) {
       return res.status(401).json({
         success: false,
-        message: "Unauthorized user",
+        message: "Please login first.",
       });
     }
 
-    const userRole = req.user.role_name?.toLowerCase();
-
-    const hasAccess = allowedRoles.some(
-      (role) => role.toLowerCase() === userRole
-    );
-
-    if (!hasAccess) {
+    if (!allowedRoles.includes(req.user.role_name)) {
       return res.status(403).json({
         success: false,
-        message: `Access denied. Required role: ${allowedRoles.join(", ")}`,
+        message: "You do not have permission to access this resource.",
       });
     }
 

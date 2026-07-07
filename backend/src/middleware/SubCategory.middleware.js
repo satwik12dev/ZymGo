@@ -33,7 +33,7 @@ const fileFilter = (req, file, cb) => {
   cb(new Error("Only JPG, JPEG, PNG, and WEBP images are allowed"));
 };
 
-const upload = multer({
+const uploadsub = multer({
   storage,
   fileFilter,
   limits: {
@@ -41,4 +41,4 @@ const upload = multer({
   },
 });
 
-module.exports = upload;
+module.exports = uploadsub;

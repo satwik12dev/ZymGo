@@ -338,4 +338,4 @@ const viewGymById = async (req, res) => {
 
 module.exports = {
   viewGymById,
-};
+};        

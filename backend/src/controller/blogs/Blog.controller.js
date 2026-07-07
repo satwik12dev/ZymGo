@@ -638,7 +638,7 @@ const deleteBlog = async (req, res) => {
         status
       FROM blogs
       WHERE id = ?`,
-      [id]
+      [id] 
     );
 
     if (blogRows.length === 0) {
@@ -666,8 +666,6 @@ const deleteBlog = async (req, res) => {
     });
   }
 };
-
-
 
 module.exports = {
   addBlog,
