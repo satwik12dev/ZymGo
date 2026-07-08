@@ -66,6 +66,7 @@ const {getGymAnalytics,
 
 
 const getReportsDashboard  = require("./controller/reports/report.controller");
+const exportReports = require("./controller/reports/exportReports.controller");
 
 
 const {
@@ -98,6 +99,33 @@ const {
   getAuditStats,
 } = require("./controller/admin/auditTrail.controller");
 
+
+
+const {
+  getInvoiceSummary,
+  getInvoices,
+  getInvoiceById,
+  createInvoice,
+  updateInvoice,
+  deleteInvoice,
+  updateInvoiceStatus,
+  sendInvoiceByEmail,
+  sendInvoiceByWhatsApp,
+} = require("./controller/finances/invoice.controller");
+
+const { getAdvancedFinanceReport } = require("./controller/finances/advancedReport.controller");
+
+const {
+  getPayments,
+  exportPaymentsCSV
+} = require("./controller/finances/payment.controller");
+
+const {
+  getCampaigns,
+  createCampaign,
+  updateCampaign,
+  deleteCampaign
+} = require("./controller/finances/campaign.controller");
 
 route.use(express.json())
 route.use(cors())
@@ -241,26 +269,36 @@ route.get("/gym-subscription/status/:gym_id",authenticate,authorize("Super Admin
  * @route /finance/invoices
  * @description
  */
-
+route.get("/finance/getinvoices", authenticate, authorize("Super Admin"), getInvoices);
+route.get("/finance/getinvoices/:id", authenticate, authorize("Super Admin"), getInvoiceById);
+route.post("/finance/createinvoice", authenticate, authorize("Super Admin"), createInvoice);
+route.put("/finance/updateinvoice/:id", authenticate, authorize("Super Admin"), updateInvoice);
+route.delete("/finance/deleteinvoice/:id", authenticate, authorize("Super Admin"), deleteInvoice);
+route.patch("/finance/updateinvoicestatus/:id", authenticate, authorize("Super Admin"), updateInvoiceStatus);
+route.get("/finance/invoices/summary", authenticate, authorize("Super Admin"), getInvoiceSummary);
 
 
 /**
  * @route /finance/reports
  * @description
  */
-
+route.get("/finance/getreports", authenticate, authorize("Super Admin"), getAdvancedFinanceReport);
 
 /**
  * @route /finance/payments
  * @description
  */
-
+route.get("/finance/payments", authenticate, authorize("Super Admin"), getPayments);
+route.get("/finance/payments/export", authenticate, authorize("Super Admin"), exportPaymentsCSV);
 
 /**
  * @route /finance/campaigns
  * @description
  */
-
+route.get("/finance/campaigns", authenticate, authorize("Super Admin"), getCampaigns);
+route.post("/finance/campaigns", authenticate, authorize("Super Admin"), createCampaign);
+route.put("/finance/campaigns/:id", authenticate, authorize("Super Admin"), updateCampaign);
+route.delete("/finance/campaigns/:id", authenticate, authorize("Super Admin"), deleteCampaign);
 /*****************************************************
                     BANNER API's
 *******************************************************/
@@ -417,6 +455,13 @@ route.get(
   authenticate,
   authorize("Super Admin", "Admin"),
   getReportsDashboard
+);
+
+route.get(
+  "/gym/report/export",
+  authenticate,
+  authorize("Super Admin", "Admin"),
+  exportReports
 );
 
 /*****************************************************
