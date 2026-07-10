@@ -1,14 +1,7 @@
 const jwt = require("jsonwebtoken");
 const pool = require("../config/pool");
 
-/* =========================================================
-   AUTHENTICATE
-   - Checks Bearer token
-   - Verifies JWT
-   - Checks logout blacklist
-   - Checks user still exists and is active
-   - Attaches logged-in user to req.user
-========================================================= */
+
 const authenticate = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;

@@ -125,6 +125,7 @@ const getAuditLogs = async (req, res) => {
     });
   }
 };
+
 const getAuditFilterOptions = async (req, res) => {
   try {
     const { name, from_date, to_date } = req.query;

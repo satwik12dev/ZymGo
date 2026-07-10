@@ -35,7 +35,6 @@ const addCampaignLog = async ({
 };
 
 
-
 /* =========================================================
    GET CAMPAIGN DASHBOARD
    GET /campaigns/dashboard?gymId=1
@@ -43,6 +42,8 @@ const addCampaignLog = async ({
 const getFinalGymId = (req) => {
   return req.body?.gymId || req.query?.gymId || req.user?.gym_id || null;
 };
+
+
 const getCampaignDashboard = async (req, res) => {
   try {
     const [rows] = await db.query(`
