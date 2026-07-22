@@ -1,0 +1,448 @@
+/* RolesPermissions.css - Roles & Permissions Administration Page Styling */
+
+.roles-permissions-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  padding-bottom: 48px;
+  font-family: var(--font-family, 'Plus Jakarta Sans', sans-serif);
+  animation: rolesFadeIn 0.3s ease-out;
+}
+
+@keyframes rolesFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Page Title Banner */
+.roles-page-header {
+  margin-bottom: 4px;
+}
+
+.roles-page-header h1 {
+  font-size: 26px;
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.roles-page-header p {
+  font-size: 14px;
+  color: #64748B;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* Row 1: Create Role & Roles List */
+.roles-top-row {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 20px;
+}
+
+@media (max-width: 1024px) {
+  .roles-top-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.roles-card-box {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  display: flex;
+  flex-direction: column;
+}
+
+.roles-card-header {
+  margin-bottom: 18px;
+}
+
+.roles-card-header h3 {
+  font-size: 17px;
+  font-weight: 800;
+  color: #0F172A;
+}
+
+.roles-card-header p {
+  font-size: 13px;
+  color: #64748B;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.role-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.role-form-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #334155;
+}
+
+.role-form-sublabel {
+  font-size: 11px;
+  color: #94A3B8;
+  font-weight: 500;
+  margin-top: -2px;
+}
+
+.role-input-field {
+  width: 100%;
+  height: 44px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 0 14px;
+  font-size: 13.5px;
+  color: #0F172A;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.role-input-field:focus {
+  border-color: #F05223;
+  box-shadow: 0 0 0 3px rgba(240, 82, 35, 0.12);
+}
+
+.role-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  margin-top: 4px;
+  margin-bottom: 18px;
+}
+
+.role-checkbox-input {
+  width: 17px;
+  height: 17px;
+  accent-color: #F05223;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.btn-create-role-orange {
+  width: 100%;
+  height: 44px;
+  background: linear-gradient(135deg, #F05223 0%, #D94418 100%);
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(240, 82, 35, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-create-role-orange:hover {
+  background: linear-gradient(135deg, #ff6334 0%, #e04b1e 100%);
+  box-shadow: 0 6px 18px rgba(240, 82, 35, 0.4);
+}
+
+/* Roles List Table */
+.roles-custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13.5px;
+}
+
+.roles-custom-table th {
+  background: #F8FAFC;
+  padding: 10px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.roles-custom-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #F1F5F9;
+  color: #334155;
+  vertical-align: middle;
+}
+
+.roles-custom-table tr:last-child td {
+  border-bottom: none;
+}
+
+.roles-custom-table tr:hover {
+  background-color: #F8FAFC;
+}
+
+.role-slug-code {
+  font-family: monospace;
+  color: #64748B;
+  font-size: 12.5px;
+}
+
+.status-active-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  background: #DCFCE7;
+  color: #15803D;
+}
+
+.btn-manage-permissions-link {
+  color: #2563EB;
+  font-weight: 600;
+  font-size: 13px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-manage-permissions-link:hover {
+  text-decoration: underline;
+}
+
+/* Role Permissions Section */
+.role-permissions-section {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.role-select-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #334155;
+}
+
+.role-select-dropdown {
+  height: 40px;
+  padding: 0 16px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #0F172A;
+  outline: none;
+  cursor: pointer;
+}
+
+.permissions-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 1024px) {
+  .permissions-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .permissions-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.perm-cat-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.perm-cat-title {
+  font-size: 12px;
+  font-weight: 800;
+  color: #0F172A;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.perm-checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.perm-item-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.perm-checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: #2563EB;
+  cursor: pointer;
+  margin-top: 2px;
+}
+
+.perm-text-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.perm-name-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #1E293B;
+  line-height: 1.2;
+}
+
+.perm-slug-sub {
+  font-size: 11px;
+  color: #94A3B8;
+  font-family: monospace;
+  margin-top: 1px;
+}
+
+.btn-save-permissions-orange {
+  align-self: flex-start;
+  padding: 12px 26px;
+  background: linear-gradient(135deg, #F05223 0%, #D94418 100%);
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(240, 82, 35, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 8px;
+}
+
+.btn-save-permissions-orange:hover {
+  background: linear-gradient(135deg, #ff6334 0%, #e04b1e 100%);
+  box-shadow: 0 6px 18px rgba(240, 82, 35, 0.4);
+}
+
+/* Assign Role to User Table Box */
+.assign-role-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 18px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.assign-role-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.assign-role-header h3 {
+  font-size: 17px;
+  font-weight: 800;
+  color: #0F172A;
+}
+
+.assign-role-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13.5px;
+}
+
+.assign-role-table th {
+  background: #F8FAFC;
+  padding: 12px 20px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.assign-role-table td {
+  padding: 14px 20px;
+  border-bottom: 1px solid #F1F5F9;
+  color: #334155;
+  vertical-align: middle;
+}
+
+.assign-role-table tr:last-child td {
+  border-bottom: none;
+}
+
+.assign-role-table tr:hover {
+  background-color: #F8FAFC;
+}
+
+.assign-user-name {
+  font-weight: 700;
+  color: #0F172A;
+  line-height: 1.2;
+}
+
+.assign-user-tag {
+  font-size: 12px;
+  color: #94A3B8;
+}
+
+.role-assign-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.role-select-mini {
+  height: 34px;
+  padding: 0 10px;
+  border: 1px solid #CBD5E1;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  outline: none;
+  background: #FFFFFF;
+}
+
+.btn-save-mini-blue {
+  padding: 6px 14px;
+  background: #2563EB;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-save-mini-blue:hover {
+  background: #1D4ED8;
+}

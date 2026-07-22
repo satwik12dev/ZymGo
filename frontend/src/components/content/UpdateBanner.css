@@ -1,0 +1,289 @@
+/* UpdateBanner.css - Zymgoo CRM Edit Banner Page */
+
+.update-banner-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  padding-bottom: 40px;
+}
+
+.update-banner-title-group h1 {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+.update-banner-title-group p {
+  font-size: 13.5px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+/* 2-Column Main Layout */
+.update-banner-main-grid {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 1100px) {
+  .update-banner-main-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.update-left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.update-right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Edit Card */
+.edit-banner-card {
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.edit-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.edit-card-header.orange svg { color: #ea580c; }
+.edit-card-header.blue svg { color: #2563eb; }
+.edit-card-header.green svg { color: #16a34a; }
+
+/* Grid helpers */
+.grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 600px) {
+  .grid-2col {
+    grid-template-columns: 1fr;
+  }
+}
+
+.grid-3col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 700px) {
+  .grid-3col {
+    grid-template-columns: 1fr;
+  }
+}
+
+.edit-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.edit-form-group label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.edit-input-field {
+  width: 100%;
+  padding: 10px 14px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 13.5px;
+  color: #0f172a;
+  outline: none;
+}
+
+.edit-input-field:focus {
+  border-color: #ea580c;
+}
+
+.edit-select-field {
+  width: 100%;
+  padding: 10px 14px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 13.5px;
+  color: #0f172a;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Right Column Cards */
+.right-preview-img-wrapper {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #f1f5f9;
+}
+
+.right-preview-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.replace-img-box {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.replace-img-box span.lbl {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.replace-file-input {
+  width: 100%;
+  font-size: 12.5px;
+  color: #64748b;
+}
+
+.format-info-text {
+  font-size: 11.5px;
+  color: #94a3b8;
+}
+
+/* Performance 2x2 Grid */
+.perf-grid-2x2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.perf-box {
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.perf-box.purple { background-color: #f3e8ff; color: #9333ea; }
+.perf-box.blue { background-color: #eff6ff; color: #2563eb; }
+.perf-box.orange { background-color: #fff7ed; color: #ea580c; }
+.perf-box.grey { background-color: #f8fafc; color: #475569; }
+
+.perf-box span.val {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.perf-box span.lbl {
+  font-size: 11px;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+.status-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 4px;
+}
+
+.status-toggle-row span.lbl {
+  font-size: 13px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.toggle-active-link {
+  font-size: 12px;
+  color: #64748b;
+  cursor: pointer;
+  margin-left: 6px;
+  text-decoration: underline;
+}
+
+.banner-expired-alert {
+  background-color: #fef2f2;
+  border: 1px solid #fee2e2;
+  color: #ef4444;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+/* Right Actions Card */
+.right-actions-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn-save-banner-orange {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  background-color: #ea580c;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 14.5px;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.3);
+  transition: background-color 0.15s ease;
+}
+
+.btn-save-banner-orange:hover {
+  background-color: #c2410c;
+}
+
+.btn-cancel-banner-white {
+  width: 100%;
+  background-color: #ffffff;
+  color: #475569;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 11px;
+  border-radius: 12px;
+  border: 1px solid #cbd5e1;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.btn-cancel-banner-white:hover {
+  background-color: #f8fafc;
+  color: #0f172a;
+}

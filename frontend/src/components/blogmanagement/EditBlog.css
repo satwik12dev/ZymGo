@@ -1,0 +1,188 @@
+/* EditBlog.css - Zymgoo CRM Edit Blog Post Page */
+
+.edit-blog-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  padding-bottom: 40px;
+}
+
+/* Header & Top Bar */
+.edit-blog-main-header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.edit-blog-main-header h1 {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+.edit-blog-main-header p {
+  font-size: 13.5px;
+  color: #64748b;
+}
+
+.edit-blog-actions-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.edit-blog-title-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.edit-blog-title-group h2 {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 500px;
+}
+
+.updated-tag-span {
+  font-size: 12px;
+  color: #94a3b8;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.btn-save-orange {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ea580c;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 10.5px 26px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.3);
+  transition: all 0.2s ease;
+}
+
+.btn-save-orange:hover {
+  background-color: #c2410c;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(234, 88, 12, 0.38);
+}
+
+/* Feature Image Preview Container */
+.uploaded-feature-preview {
+  position: relative;
+  width: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+.uploaded-feature-img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Focus Keywords Pill Section */
+.focus-keywords-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.keyword-tag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #fff7ed;
+  color: #c2410c;
+  border: 1px solid #ffedd5;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  transition: all 0.15s ease;
+}
+
+.keyword-tag-pill:hover {
+  background-color: #ffedd5;
+}
+
+.keyword-tag-pill button.btn-remove-tag {
+  background: transparent;
+  border: none;
+  color: #ea580c;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  padding: 0;
+  line-height: 1;
+}
+
+.add-keyword-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.add-keyword-input {
+  flex: 1;
+  padding: 8.5px 12px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 12.5px;
+  color: #0f172a;
+  outline: none;
+}
+
+.add-keyword-input:focus {
+  border-color: #ea580c;
+}
+
+.btn-add-keyword-navy {
+  background-color: #0f172a;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 12.5px;
+  padding: 8.5px 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.btn-add-keyword-navy:hover {
+  background-color: #1e293b;
+}
+
+/* SEO Indicator Bars */
+.seo-progress-bar {
+  height: 4px;
+  width: 100%;
+  border-radius: 2px;
+  margin-top: 2px;
+}
+
+.seo-progress-bar.red { background-color: #ef4444; }
+.seo-progress-bar.green { background-color: #22c55e; }

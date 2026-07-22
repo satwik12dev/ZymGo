@@ -1,0 +1,224 @@
+/* AuditTrail.css - Administration Audit Trail Activity Log Page Styling */
+
+.audit-trail-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  padding-bottom: 48px;
+  font-family: var(--font-family, 'Plus Jakarta Sans', sans-serif);
+  animation: auditFadeIn 0.3s ease-out;
+}
+
+@keyframes auditFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Page Header */
+.audit-page-header {
+  margin-bottom: 4px;
+}
+
+.audit-page-header h1 {
+  font-size: 26px;
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.audit-page-header p {
+  font-size: 14px;
+  color: #64748B;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* Filter Controls Box */
+.audit-filter-card-box {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 18px;
+  padding: 20px 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.audit-filter-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.audit-filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.audit-filter-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #475569;
+}
+
+.audit-input-date, .audit-select-input, .audit-input-text {
+  height: 40px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 0 12px;
+  font-size: 13px;
+  color: #0F172A;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.audit-input-date {
+  width: 140px;
+}
+
+.audit-select-input {
+  min-width: 120px;
+  cursor: pointer;
+}
+
+.audit-input-text {
+  width: 180px;
+}
+
+.audit-input-text::placeholder {
+  color: #94A3B8;
+}
+
+.audit-input-date:focus, .audit-select-input:focus, .audit-input-text:focus {
+  border-color: #F05223;
+  box-shadow: 0 0 0 3px rgba(240, 82, 35, 0.12);
+}
+
+.audit-btn-apply {
+  height: 40px;
+  padding: 0 20px;
+  background: linear-gradient(135deg, #F05223 0%, #D94418 100%);
+  border: none;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(240, 82, 35, 0.25);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.audit-btn-apply:hover {
+  background: linear-gradient(135deg, #ff6334 0%, #e04b1e 100%);
+  box-shadow: 0 6px 16px rgba(240, 82, 35, 0.35);
+}
+
+.audit-btn-reset {
+  height: 40px;
+  padding: 0 18px;
+  background: #F1F5F9;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.audit-btn-reset:hover {
+  background: #E2E8F0;
+  color: #0F172A;
+}
+
+/* Audit Records Table Box */
+.audit-table-card-box {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 18px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.audit-custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13.5px;
+}
+
+.audit-custom-table th {
+  background: #F8FAFC;
+  padding: 14px 20px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.audit-custom-table td {
+  padding: 14px 20px;
+  border-bottom: 1px solid #F1F5F9;
+  color: #334155;
+  vertical-align: middle;
+}
+
+.audit-custom-table tr:last-child td {
+  border-bottom: none;
+}
+
+.audit-custom-table tr:hover {
+  background-color: #F8FAFC;
+}
+
+.audit-time-text {
+  font-family: monospace;
+  font-size: 12.5px;
+  color: #334155;
+  font-weight: 500;
+}
+
+.audit-admin-text {
+  font-weight: 700;
+  color: #0F172A;
+}
+
+.module-tag-pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  background: #F1F5F9;
+  color: #475569;
+  font-family: monospace;
+}
+
+.action-tag-pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  background: #EFF6FF;
+  color: #2563EB;
+  font-family: monospace;
+}
+
+.audit-desc-text {
+  font-weight: 500;
+  color: #334155;
+}
+
+.audit-ip-text {
+  font-family: monospace;
+  font-size: 12px;
+  color: #94A3B8;
+}

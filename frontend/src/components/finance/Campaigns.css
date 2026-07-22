@@ -1,0 +1,245 @@
+/* Campaigns.css - Zymgoo CRM Campaigns Management Page */
+
+.campaigns-page {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 100%;
+  padding-bottom: 40px;
+}
+
+/* Header */
+.campaigns-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.campaigns-title-group h1 {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+.campaigns-title-group p {
+  font-size: 13.5px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.btn-new-campaign-orange {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #ea580c;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 13.5px;
+  padding: 10px 22px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.3);
+  transition: background-color 0.15s ease;
+}
+
+.btn-new-campaign-orange:hover {
+  background-color: #c2410c;
+}
+
+/* 5 Stat Cards Row */
+.campaigns-stats-grid-5 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 1100px) {
+  .campaigns-stats-grid-5 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .campaigns-stats-grid-5 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.campaign-stat-card {
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 16px;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+}
+
+.campaign-stat-card .stat-info-text span.lbl {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.campaign-stat-card .stat-info-text span.val {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.2;
+  margin-top: 2px;
+}
+
+/* Filter Card */
+.campaigns-filter-card {
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 16px;
+  padding: 16px 24px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.btn-filter-navy {
+  background-color: #0f172a;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 13.5px;
+  padding: 9px 24px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+  transition: background-color 0.15s ease;
+}
+
+.btn-filter-navy:hover {
+  background-color: #1e293b;
+}
+
+/* Table Card */
+.campaigns-table-card {
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+  display: flex;
+  flex-direction: column;
+}
+
+.campaigns-table-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.campaigns-table-header h4 {
+  font-size: 15px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.campaigns-custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.campaigns-custom-table th {
+  background-color: #ffffff;
+  padding: 14px 24px;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.campaigns-custom-table td {
+  padding: 18px 24px;
+  font-size: 13.5px;
+  color: #1e293b;
+  border-bottom: 1px solid #f8fafc;
+  vertical-align: middle;
+}
+
+.campaign-info-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.campaign-info-cell h5 {
+  font-size: 14px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.campaign-sub-tag {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.campaign-msg-preview {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.notification-type-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background-color: #f5f3ff;
+  color: #7c3aed;
+  font-weight: 700;
+  font-size: 11.5px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+}
+
+.sent-failed-fraction {
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+.sent-failed-fraction span.green { color: #16a34a; }
+.sent-failed-fraction span.red { color: #ef4444; }
+
+.status-pending-tag {
+  display: inline-block;
+  background-color: #fef9c3;
+  color: #854d0e;
+  font-weight: 700;
+  font-size: 11.5px;
+  padding: 3px 12px;
+  border-radius: 9999px;
+}
+
+.btn-send-campaign-green {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #16a34a;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 12.5px;
+  padding: 7px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.2);
+  transition: background-color 0.15s ease;
+}
+
+.btn-send-campaign-green:hover {
+  background-color: #15803d;
+}

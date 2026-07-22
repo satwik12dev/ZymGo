@@ -1,0 +1,564 @@
+/* GymDetail.css - Zymgoo CRM Gym Detail & Profile Page */
+
+.gym-detail-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  padding-bottom: 40px;
+}
+
+/* Header & Breadcrumb */
+.gym-detail-top-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.gym-detail-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-icon-back {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-icon-back:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.breadcrumb-text-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.breadcrumb-path {
+  font-size: 12.5px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.gym-detail-title-main {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+.gym-detail-actions-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-edit-white {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  font-weight: 600;
+  font-size: 13.5px;
+  padding: 8.5px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.btn-edit-white:hover {
+  background-color: #f8fafc;
+}
+
+.btn-new-invoice-orange {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #f97316;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 13.5px;
+  padding: 8.5px 20px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.25);
+  transition: background-color 0.15s;
+}
+
+.btn-new-invoice-orange:hover {
+  background-color: #ea580c;
+}
+
+/* Gym Hero Banner Card */
+.gym-hero-card {
+  background-color: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 16px;
+  padding: 22px 26px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+}
+
+.gym-hero-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.gym-hero-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: #ffedd5;
+  color: #ea580c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.gym-hero-meta h2 {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.gym-hero-pills {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.gym-hero-sub {
+  font-size: 13.5px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.plan-unsubscribed-box {
+  background-color: #fffde7;
+  border: 1px solid #fef08a;
+  border-radius: 12px;
+  padding: 12px 20px;
+  text-align: center;
+}
+
+.plan-unsubscribed-box h4 {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #ca8a04;
+}
+
+.plan-unsubscribed-box p {
+  font-size: 12px;
+  color: #eab308;
+  font-weight: 600;
+}
+
+/* Metric Cards Row */
+.gym-detail-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 1024px) {
+  .gym-detail-stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.detail-stat-box {
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+}
+
+.detail-stat-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.detail-stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-stat-lbl {
+  font-size: 11.5px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.detail-stat-val {
+  font-size: 15px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+/* Tabs Bar */
+.gym-tabs-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 14px;
+  padding: 6px 8px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+  overflow-x: auto;
+}
+
+.gym-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #64748b;
+  border: none;
+  background: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.gym-tab-btn.active {
+  background-color: #f97316;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(249, 115, 22, 0.25);
+}
+
+.gym-tab-btn:hover:not(.active) {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+/* Main 2-Column Grid Layout */
+.gym-detail-main-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 20px;
+}
+
+@media (max-width: 1024px) {
+  .gym-detail-main-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.left-content-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.right-sidebar-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Detail Card Box */
+.detail-card-box {
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.detail-card-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.detail-card-header-row h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.link-full-profile {
+  font-size: 13px;
+  font-weight: 700;
+  color: #f97316;
+  cursor: pointer;
+}
+
+.link-full-profile:hover {
+  text-decoration: underline;
+}
+
+/* Owner Account Group */
+.owner-banner-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.owner-info-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.owner-avatar-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #ffedd5;
+  color: #ea580c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.owner-action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-contact-call {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #f0fdf4;
+  color: #16a34a;
+  font-weight: 600;
+  font-size: 12.5px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid #bbf7d0;
+  cursor: pointer;
+}
+
+.btn-contact-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #f0fdf4;
+  color: #16a34a;
+  font-weight: 600;
+  font-size: 12.5px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid #bbf7d0;
+  cursor: pointer;
+}
+
+/* Key-Value Table Grid */
+.detail-key-val-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px 24px;
+  border-top: 1px solid #f8fafc;
+  padding-top: 16px;
+}
+
+.key-val-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.key-val-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: #94a3b8;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.key-val-value {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+/* Other Gyms List */
+.other-gyms-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid #f8fafc;
+  padding-top: 16px;
+}
+
+.other-gym-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background-color: #f8fafc;
+  border-radius: 12px;
+  border: 1px solid #f1f5f9;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.other-gym-item:hover {
+  background-color: #f1f5f9;
+}
+
+.other-gym-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Location Placeholder Box */
+.location-map-box {
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 14px;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
+}
+
+.location-map-box h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #166534;
+}
+
+.location-map-box p {
+  font-size: 12.5px;
+  color: #15803d;
+  font-weight: 500;
+}
+
+/* Right Sidebar Cards */
+.quick-action-btn-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-qa-deactivate {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background-color: #fef2f2;
+  color: #dc2626;
+  font-weight: 700;
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.btn-qa-deactivate:hover {
+  background-color: #fee2e2;
+}
+
+.btn-qa-assign {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background-color: #16a34a;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 13.5px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
+  transition: background-color 0.15s;
+}
+
+.btn-qa-assign:hover {
+  background-color: #15803d;
+}
+
+.btn-qa-invoice {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background-color: #3b82f6;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 13.5px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+  transition: background-color 0.15s;
+}
+
+.btn-qa-invoice:hover {
+  background-color: #2563eb;
+}
+
+.btn-qa-edit-white {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  color: #334155;
+  font-weight: 700;
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.btn-qa-edit-white:hover {
+  background-color: #f8fafc;
+}
+
+/* Checkboxes in Admin Controls */
+.checkbox-admin-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #334155;
+}

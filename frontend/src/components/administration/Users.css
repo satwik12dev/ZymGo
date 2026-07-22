@@ -1,0 +1,415 @@
+/* Users.css - Administration Admin Users Management Page Styling */
+
+.admin-users-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  padding-bottom: 48px;
+  font-family: var(--font-family, 'Plus Jakarta Sans', sans-serif);
+  animation: usersFadeIn 0.3s ease-out;
+}
+
+@keyframes usersFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Header Banner */
+.admin-users-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.admin-users-hero-title h1 {
+  font-size: 26px;
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.admin-users-hero-title p {
+  font-size: 14px;
+  color: #64748B;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+.btn-roles-permissions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #F05223 0%, #D94418 100%);
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(240, 82, 35, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-roles-permissions:hover {
+  background: linear-gradient(135deg, #ff6334 0%, #e04b1e 100%);
+  box-shadow: 0 6px 18px rgba(240, 82, 35, 0.4);
+}
+
+/* Top 4 Summary Metric Cards */
+.admin-users-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .admin-users-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.admin-user-stat-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.admin-user-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.user-stat-icon-wrapper {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.user-stat-icon-wrapper.blue { background: #EFF6FF; color: #2563EB; }
+.user-stat-icon-wrapper.green { background: #F0FDF4; color: #16A34A; }
+.user-stat-icon-wrapper.purple { background: #FAF5FF; color: #9333EA; }
+.user-stat-icon-wrapper.orange { background: #FFF7ED; color: #EA580C; }
+
+.user-stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-stat-val {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.1;
+}
+
+.user-stat-lbl {
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748B;
+  margin-top: 2px;
+}
+
+/* Create New User Card Form */
+.create-user-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.create-user-card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.create-user-icon-square {
+  width: 40px;
+  height: 40px;
+  background: #F0FDF4;
+  border: 1px solid #DCFCE7;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #16A34A;
+  flex-shrink: 0;
+}
+
+.create-user-header-text h3 {
+  font-size: 17px;
+  font-weight: 800;
+  color: #0F172A;
+}
+
+.create-user-header-text p {
+  font-size: 13px;
+  color: #64748B;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.create-user-form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .create-user-form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .create-user-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.user-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.user-form-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #334155;
+}
+
+.user-input-field, .user-select-field {
+  width: 100%;
+  height: 44px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 0 14px;
+  font-size: 13.5px;
+  color: #0F172A;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.user-input-field::placeholder {
+  color: #94A3B8;
+}
+
+.user-input-field:focus, .user-select-field:focus {
+  border-color: #F05223;
+  box-shadow: 0 0 0 3px rgba(240, 82, 35, 0.12);
+}
+
+.btn-create-user-submit {
+  align-self: flex-start;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #F05223 0%, #D94418 100%);
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(240, 82, 35, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 4px;
+}
+
+.btn-create-user-submit:hover {
+  background: linear-gradient(135deg, #ff6334 0%, #e04b1e 100%);
+  box-shadow: 0 6px 18px rgba(240, 82, 35, 0.4);
+}
+
+/* Admin Users Directory Table Box */
+.admin-users-table-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 18px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.table-card-top-bar {
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid #F1F5F9;
+  flex-wrap: wrap;
+}
+
+.table-card-top-bar h4 {
+  font-size: 16px;
+  font-weight: 800;
+  color: #0F172A;
+}
+
+.user-table-search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 260px;
+}
+
+.user-table-search-icon {
+  position: absolute;
+  left: 12px;
+  color: #94A3B8;
+  pointer-events: none;
+}
+
+.user-table-search-input {
+  width: 100%;
+  height: 38px;
+  padding: 0 14px 0 38px;
+  background-color: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  font-size: 13px;
+  color: #0F172A;
+  outline: none;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.user-table-search-input::placeholder {
+  color: #94A3B8;
+}
+
+.user-table-search-input:focus {
+  border-color: #F05223;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(240, 82, 35, 0.12);
+}
+
+.admin-users-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13.5px;
+}
+
+.admin-users-table th {
+  background: #F8FAFC;
+  padding: 12px 20px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.admin-users-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid #F1F5F9;
+  color: #334155;
+  vertical-align: middle;
+}
+
+.admin-users-table tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-users-table tr:hover {
+  background-color: #F8FAFC;
+}
+
+.user-profile-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.user-name-text {
+  font-weight: 700;
+  color: #0F172A;
+  line-height: 1.2;
+}
+
+.user-you-tag {
+  color: #F05223;
+  font-size: 12px;
+  font-weight: 700;
+  margin-left: 4px;
+}
+
+.user-handle-text {
+  font-size: 12px;
+  color: #94A3B8;
+}
+
+.contact-email-text {
+  font-weight: 500;
+  color: #334155;
+  line-height: 1.3;
+}
+
+.contact-phone-text {
+  font-size: 12px;
+  color: #64748B;
+}
+
+.role-pill-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  background: #FAF5FF;
+  color: #9333EA;
+  border: 1px solid #F3E8FF;
+}
+
+.status-active-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  background: #F0FDF4;
+  color: #16A34A;
+}
+
+.last-login-text {
+  font-size: 12px;
+  color: #64748B;
+  line-height: 1.3;
+}

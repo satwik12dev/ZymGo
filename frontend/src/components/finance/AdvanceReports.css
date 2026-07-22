@@ -1,0 +1,227 @@
+/* AdvanceReports.css - Zymgoo CRM Advanced Finance Reports Page */
+
+.advance-reports-page {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 100%;
+  padding-bottom: 40px;
+}
+
+/* Header Bar */
+.reports-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.reports-title-group h1 {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+.reports-title-group p {
+  font-size: 13.5px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.btn-run-dunning-navy {
+  background-color: #0f172a;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 13.5px;
+  padding: 10px 22px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+  transition: background-color 0.15s ease;
+}
+
+.btn-run-dunning-navy:hover {
+  background-color: #1e293b;
+}
+
+/* Date Filter Card */
+.reports-date-filter-card {
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 16px;
+  padding: 20px 24px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.reports-filter-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.reports-filter-input-group label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.reports-date-input {
+  padding: 9.5px 14px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 13.5px;
+  color: #0f172a;
+  outline: none;
+  width: 170px;
+}
+
+.btn-apply-orange {
+  background-color: #ea580c;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 13.5px;
+  padding: 9.5px 22px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25);
+  transition: background-color 0.15s ease;
+}
+
+.btn-apply-orange:hover {
+  background-color: #c2410c;
+}
+
+.btn-reset-grey {
+  background-color: #e2e8f0;
+  color: #475569;
+  font-weight: 700;
+  font-size: 13.5px;
+  padding: 9.5px 20px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.btn-reset-grey:hover {
+  background-color: #cbd5e1;
+}
+
+/* 4 Banner Stat Cards Grid */
+.reports-stats-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .reports-stats-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .reports-stats-grid-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.reports-stat-box-item {
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 16px;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+}
+
+.reports-stat-box-item span.lbl {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.reports-stat-box-item span.val {
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-top: 2px;
+}
+
+.reports-stat-box-item span.val.green { color: #16a34a; }
+.reports-stat-box-item span.val.dark { color: #0f172a; }
+.reports-stat-box-item span.val.red { color: #dc2626; }
+.reports-stat-box-item span.val.orange { color: #ea580c; }
+
+/* Section Cards & Tables */
+.reports-section-card {
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+  display: flex;
+  flex-direction: column;
+}
+
+.reports-card-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.reports-card-header h3 {
+  font-size: 16px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.reports-custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.reports-custom-table th {
+  background-color: #f8fafc;
+  padding: 14px 24px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #475569;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.reports-custom-table td {
+  padding: 16px 24px;
+  font-size: 13.5px;
+  color: #1e293b;
+  border-bottom: 1px solid #f8fafc;
+}
+
+.reports-empty-msg-td {
+  padding: 40px 24px;
+  text-align: center;
+  font-size: 13.5px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.recovery-pill-red {
+  display: inline-block;
+  background-color: #dc2626;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 11.5px;
+  padding: 3px 10px;
+  border-radius: 9999px;
+}

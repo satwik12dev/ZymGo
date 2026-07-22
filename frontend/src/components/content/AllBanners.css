@@ -1,0 +1,395 @@
+/* AllBanners.css - Zymgoo CRM Banner Management Page */
+
+.all-banners-page {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 100%;
+  padding-bottom: 40px;
+}
+
+/* Header */
+.all-banners-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.all-banners-title-group h1 {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+.all-banners-title-group p {
+  font-size: 13.5px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.btn-add-banner-orange {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #ea580c;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 13.5px;
+  padding: 10px 22px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.3);
+  transition: background-color 0.15s ease;
+}
+
+.btn-add-banner-orange:hover {
+  background-color: #c2410c;
+}
+
+/* 4 Stat Cards Row */
+.all-banners-stats-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 1024px) {
+  .all-banners-stats-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .all-banners-stats-grid-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.banner-stat-card {
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 16px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+}
+
+.banner-stat-card .stat-info-text span.lbl {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.banner-stat-card .stat-info-text span.val {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.2;
+  margin-top: 2px;
+}
+
+/* Filter Card */
+.all-banners-filter-card {
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 16px;
+  padding: 16px 24px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.banners-search-wrapper {
+  position: relative;
+  flex: 1;
+  min-width: 260px;
+}
+
+.banners-search-wrapper svg {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+}
+
+.banners-search-input {
+  width: 100%;
+  padding: 10px 14px 10px 38px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 13.5px;
+  color: #0f172a;
+  outline: none;
+}
+
+.banners-search-input:focus {
+  border-color: #ea580c;
+}
+
+.btn-banner-search-navy {
+  background-color: #0f172a;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 13.5px;
+  padding: 10px 26px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+  transition: background-color 0.15s ease;
+}
+
+.btn-banner-search-navy:hover {
+  background-color: #1e293b;
+}
+
+/* 3-Column Banner Cards Grid */
+.banners-cards-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 1100px) {
+  .banners-cards-grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .banners-cards-grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.banner-item-card {
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.banner-item-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+/* Banner Image Container */
+.banner-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  background-color: #f1f5f9;
+  overflow: hidden;
+}
+
+.banner-img-element {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.badge-active-pill {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background-color: #16a34a;
+  color: #ffffff;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.badge-pos-circle {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: #ea580c;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 800;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.badge-expired-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ef4444;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 6px 20px;
+  border-radius: 9999px;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}
+
+/* Banner Body Content */
+.banner-card-body {
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.banner-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.banner-title-row h4 {
+  font-size: 16px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.cat-pill-purple {
+  background-color: #f3e8ff;
+  color: #9333ea;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+
+.cat-pill-green {
+  background-color: #dcfce7;
+  color: #16a34a;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+
+.banner-location-text {
+  font-size: 12.5px;
+  color: #64748b;
+  font-weight: 500;
+  margin-top: -6px;
+}
+
+/* Metrics Row */
+.banner-metrics-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  background-color: #f8fafc;
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+
+.metric-sub-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-sub-box span.lbl {
+  font-size: 11px;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.metric-sub-box span.val {
+  font-size: 14px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-top: 1px;
+}
+
+.banner-extra-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12.5px;
+}
+
+.detail-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #475569;
+  font-weight: 600;
+}
+
+.detail-line span.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #ea580c;
+}
+
+.date-range-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #ea580c;
+  font-weight: 700;
+}
+
+/* Banner Card Footer Actions */
+.banner-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 12px 16px;
+  border-top: 1px solid #f1f5f9;
+  background-color: #ffffff;
+}
+
+.action-text-btn {
+  background: transparent;
+  border: none;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #475569;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background-color 0.15s ease;
+}
+
+.action-text-btn:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.action-text-btn.delete {
+  color: #ef4444;
+}
+
+.action-text-btn.delete:hover {
+  background-color: #fef2f2;
+  color: #dc2626;
+}

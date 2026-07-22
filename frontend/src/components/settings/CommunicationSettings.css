@@ -1,0 +1,170 @@
+/* CommunicationSettings.css - Settings Communication & WhatsApp Template Styling */
+
+.comm-settings-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  padding-bottom: 48px;
+  font-family: var(--font-family, 'Plus Jakarta Sans', sans-serif);
+  animation: commSettingsFadeIn 0.3s ease-out;
+}
+
+@keyframes commSettingsFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Page Header */
+.comm-settings-hero h1 {
+  font-size: 26px;
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.comm-settings-hero p {
+  font-size: 14px;
+  color: #64748B;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* Main Form Card */
+.comm-settings-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 18px;
+  padding: 32px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.comm-section-box {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.comm-section-box:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.comm-section-header h3 {
+  font-size: 17px;
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.2;
+}
+
+.comm-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.comm-field-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #334155;
+}
+
+.comm-field-input {
+  width: 100%;
+  height: 44px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 0 14px;
+  font-size: 13.5px;
+  color: #0F172A;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.comm-field-textarea {
+  width: 100%;
+  min-height: 90px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 13px;
+  color: #0F172A;
+  outline: none;
+  font-family: monospace;
+  resize: vertical;
+  line-height: 1.5;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.comm-field-input:focus, .comm-field-textarea:focus {
+  border-color: #F05223;
+  box-shadow: 0 0 0 3px rgba(240, 82, 35, 0.12);
+}
+
+.comm-field-helper {
+  font-size: 11.5px;
+  color: #64748B;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.comm-form-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .comm-form-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Variable Info Banner Box */
+.comm-info-banner {
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 13px;
+  color: #1D4ED8;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.comm-info-banner code {
+  background: rgba(37, 99, 235, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-weight: 600;
+}
+
+.btn-save-comm-settings {
+  align-self: flex-start;
+  padding: 12px 28px;
+  background: linear-gradient(135deg, #F05223 0%, #D94418 100%);
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(240, 82, 35, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 8px;
+}
+
+.btn-save-comm-settings:hover {
+  background: linear-gradient(135deg, #ff6334 0%, #e04b1e 100%);
+  box-shadow: 0 6px 18px rgba(240, 82, 35, 0.4);
+}

@@ -1,8 +1,6 @@
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState } from 'react';
 import {
-  Menu,
-  X,
+  Zap,
   LayoutDashboard,
   Users,
   Wallet,
@@ -12,12 +10,18 @@ import {
   ClipboardList,
   ShieldCheck,
   Settings,
-  Dumbbell,
-  ChevronRight,
   ChevronDown,
-} from "lucide-react";
+  ChevronRight,
+  ChevronLeft,
+  Search,
+  MoreVertical,
+  LogOut,
+  Building2,
+  UserCheck,
+  ArrowUp
+} from 'lucide-react';
 
-const menuItems = [
+export const menuItems = [
   {
     title: "Dashboard",
     icon: LayoutDashboard,
@@ -30,6 +34,7 @@ const menuItems = [
       { title: "Member List", path: "/members/list" },
       { title: "Add Member", path: "/members/add" },
       { title: "Gym List", path: "/members/gyms" },
+      { title: "City Report", path: "/members/city-report" },
       { title: "Onboarding Performance", path: "/members/performance" },
       { title: "Bulk Upload Gym", path: "/members/bulk-upload" },
       { title: "Subscription Plans", path: "/members/plans" },
@@ -48,11 +53,17 @@ const menuItems = [
   },
   {
     title: "Content",
-    icon: FileText,
+    icon: ArrowUp,
     children: [
-      { title: "Banner", path: "/content/banner" },
-      { title: "Categories", path: "/content/category" },
-      { title: "Sub Categories", path: "/content/subcategory" },
+      { title: "Banners", isHeader: true },
+      { title: "Add Banner", path: "/content/banner/add" },
+      { title: "All Banners", path: "/content/banner/all" },
+      { title: "Update Banner", path: "/content/banner/update" },
+      { title: "Categories", isHeader: true },
+      { title: "Add Category", path: "/content/category/add" },
+      { title: "All Categories", path: "/content/category/all" },
+      { title: "Add Sub Category", path: "/content/subcategory/add" },
+      { title: "All Sub Categories", path: "/content/subcategory/all" },
     ],
   },
   {
@@ -60,7 +71,7 @@ const menuItems = [
     icon: Newspaper,
     children: [
       { title: "All Blogs", path: "/blogs" },
-      { title: "Create Blog", path: "/blogs/create" },
+      { title: "Add New Blog", path: "/blogs/add" },
     ],
   },
   {
@@ -77,7 +88,7 @@ const menuItems = [
     title: "Administration",
     icon: ShieldCheck,
     children: [
-      { title: "Admins", path: "/administration/admins" },
+      { title: "Users", path: "/administration/users" },
       {
         title: "Roles & Permissions",
         path: "/administration/roles&permissions",
@@ -85,6 +96,10 @@ const menuItems = [
       {
         title: "Audit Trail",
         path: "/administration/audittrail",
+      },
+      {
+        title: "Version",
+        path: "/administration/version",
       },
     ],
   },
@@ -112,275 +127,223 @@ const menuItems = [
   },
 ];
 
-export default function Sidebar() {
-  const [openMenu, setOpenMenu] = useState("Members");
-  const [mobileOpen, setMobileOpen] = useState(false);
+export default function Sidebar({
+  activeNav,
+  setActiveNav,
+  onActionTrigger,
+  onSignOut,
+  isCollapsed: externalIsCollapsed,
+  setIsCollapsed: externalSetIsCollapsed,
+  isMobileOpen,
+  setIsMobileOpen
+}) {
+  const [internalIsCollapsed, setInternalIsCollapsed] = useState(false);
+
+  const isCollapsed = externalIsCollapsed !== undefined ? externalIsCollapsed : internalIsCollapsed;
+  const setIsCollapsed = externalSetIsCollapsed || setInternalIsCollapsed;
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showUserMenu, setShowUserMenu] = useState(false);
+
+  // Keep track of which parent accordion sections are expanded
+  const [openSubmenu, setOpenSubmenu] = useState({
+    Members: false,
+    Finance: false,
+    Content: false,
+    'Blog Management': false,
+    Administration: false,
+    Settings: false
+  });
+
+  const toggleSubmenu = (title) => {
+    setOpenSubmenu((prev) => ({
+      ...prev,
+      [title]: !prev[title],
+    }));
+  };
+
+  const filteredMenuItems = menuItems.filter(item => {
+    if (!searchQuery) return true;
+    const query = searchQuery.toLowerCase();
+    const matchesMain = item.title.toLowerCase().includes(query);
+    const matchesSub = item.children?.some(child => child.title.toLowerCase().includes(query));
+    return matchesMain || matchesSub;
+  });
+
+  const handleParentClick = (item) => {
+    if (item.children) {
+      if (isCollapsed) setIsCollapsed(false);
+      toggleSubmenu(item.title);
+      // If clicking Members or Finance or Content parent, switch activeNav to default child
+      if (item.title === "Members") {
+        setActiveNav("/members/list");
+      } else if (item.title === "Finance") {
+        setActiveNav("/finance/invoices");
+      } else if (item.title === "Content") {
+        setActiveNav("/content/banner/add");
+      }
+    } else if (item.path) {
+      setActiveNav(item.path);
+      if (setIsMobileOpen) setIsMobileOpen(false);
+    }
+    onActionTrigger(`Navigated to ${item.title}`);
+  };
+
+  const handleChildClick = (parentItem, child) => {
+    setActiveNav(child.path);
+    if (setIsMobileOpen) setIsMobileOpen(false);
+    onActionTrigger(`Navigated to ${child.title}`);
+  };
 
   return (
-    <>
-      {/* Mobile Header */}
-
-      <div className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-[#111827] z-50 flex items-center justify-between px-5">
-
-        <div className="flex items-center gap-3">
-
-          <div className="w-11 h-11 rounded-xl bg-orange-500 flex items-center justify-center">
-            <Dumbbell className="text-white" size={22} />
+    <aside className={`app-sidebar ${isCollapsed ? 'collapsed' : ''} ${isMobileOpen ? 'mobile-open' : ''}`}>
+      {/* Brand Logo Header */}
+      <div className="sidebar-logo">
+        <div className="logo-main-group">
+          <div className="logo-icon-container">
+            <Zap size={22} fill="currentColor" strokeWidth={0} />
           </div>
-
-          <div>
-            <h2 className="text-white font-bold text-lg">
-              Zymgoo CRM
-            </h2>
-
-            <p className="text-gray-400 text-xs">
-              Admin Panel
-            </p>
+          <div className="logo-text-wrapper">
+            <h2>Zymgoo CRM</h2>
+            <span>Admin Panel</span>
           </div>
-
         </div>
 
         <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="text-white"
+          className="sidebar-toggle-btn"
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
         >
-          {mobileOpen ? <X size={30} /> : <Menu size={30} />}
+          {isCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
         </button>
-
       </div>
 
-      {/* Overlay */}
-
-      {mobileOpen && (
-        <div
-          onClick={() => setMobileOpen(false)}
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-        />
+      {/* Menu Search Input */}
+      {!isCollapsed && (
+        <div className="sidebar-search-container">
+          <div className="sidebar-search-box">
+            <Search size={15} />
+            <input
+              type="text"
+              placeholder="Search menu..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+        </div>
       )}
 
-      {/* Sidebar */}
+      {/* Sidebar Navigation Items */}
+      <nav className="sidebar-nav">
+        {filteredMenuItems.map((item) => {
+          const IconComponent = item.icon;
 
-      <aside
-        className={`
-fixed
-top-0
-left-0
-z-50
-h-screen
-w-[320px]
-bg-[#111827]
-border-r
-border-gray-800
-flex
-flex-col
-transition-transform
-duration-300
+          // Check if parent or one of its children is active
+          const isChildActive = item.children?.some(c => c.path === activeNav);
+          const isParentActive = item.path === activeNav || isChildActive || (item.title === "Members" && activeNav?.startsWith('/members')) || (item.title === "Content" && activeNav?.startsWith('/content'));
+          const isExpanded = openSubmenu[item.title] || (searchQuery.length > 0 && item.children);
 
-${mobileOpen ? "translate-x-0" : "-translate-x-full"}
+          return (
+            <div key={item.title}>
+              <button
+                className={`nav-item-btn ${isParentActive ? 'active' : ''}`}
+                onClick={() => handleParentClick(item)}
+                title={isCollapsed ? item.title : undefined}
+              >
+                <div className="nav-left">
+                  <IconComponent size={18} />
+                  <span>{item.title}</span>
+                </div>
 
-lg:translate-x-0
-`}
-      >
+                <div className="nav-right-group">
+                  {item.children && (
+                    isExpanded ? <ChevronDown size={15} /> : <ChevronRight size={15} />
+                  )}
+                </div>
+              </button>
 
-        {/* Logo */}
-
-        <div className="h-24 flex items-center px-8 border-b border-gray-800">
-
-          <div className="w-14 h-14 rounded-2xl bg-orange-500 flex items-center justify-center shadow-xl">
-
-            <Dumbbell
-              size={28}
-              className="text-white"
-            />
-
-          </div>
-
-          <div className="ml-4">
-
-            <h1 className="text-2xl font-bold text-white">
-              Zymgoo CRM
-            </h1>
-
-            <p className="text-sm text-gray-400 mt-1">
-              Admin Dashboard
-            </p>
-
-          </div>
-
-        </div>
-
-        {/* Navigation */}
-
-        <div className="flex-1 overflow-y-auto px-4 py-6">
-
-          <p className="px-4 mb-5 text-xs uppercase tracking-[3px] text-gray-500">
-
-            Main Menu
-
-          </p>
-
-          <nav className="space-y-2">
-
-            {menuItems.map((item) => {
-
-              const Icon = item.icon;
-
-              if (!item.children) {
-
-                return (
-
-                  <NavLink
-                    key={item.title}
-                    to={item.path}
-                    className={({ isActive }) =>
-                      `flex items-center gap-4 rounded-2xl px-5 py-4 transition-all duration-200 ${
-                        isActive
-                          ? "bg-orange-500 text-white shadow-lg"
-                          : "text-gray-300 hover:bg-gray-800 hover:text-white"
-                      }`
-                    }
-                  >
-
-                    <Icon size={22} />
-
-                    <span className="text-[16px] font-medium">
-
-                      {item.title}
-
-                    </span>
-
-                  </NavLink>
-
-                );
-
-              }
-
-              return (
-
-                <div key={item.title}>
-
-                  <button
-                    onClick={() =>
-                      setOpenMenu(
-                        openMenu === item.title
-                          ? ""
-                          : item.title
-                      )
-                    }
-                    className={`w-full flex items-center justify-between rounded-2xl px-5 py-4 transition-all duration-200 ${
-                      openMenu === item.title
-                        ? "bg-gray-800 text-white"
-                        : "text-gray-300 hover:bg-gray-800 hover:text-white"
-                    }`}
-                  >
-
-                    <div className="flex items-center gap-4">
-
-                      <Icon size={22} />
-
-                      <span className="text-[16px] font-medium">
-
-                        {item.title}
-
-                      </span>
-
-                    </div>
-
-                    {openMenu === item.title ? (
-                      <ChevronDown size={20} />
-                    ) : (
-                      <ChevronRight size={20} />
-                    )}
-
-                  </button>
-
-                  <div
-                    className={`overflow-hidden transition-all duration-300 ${
-                      openMenu === item.title
-                        ? "max-h-[600px]"
-                        : "max-h-0"
-                    }`}
-                  >
-
-                    <div className="ml-10 mt-2 space-y-2"></div>
-                                          {item.children.map((child) => (
-                        <NavLink
-                          key={child.title}
-                          to={child.path}
-                          onClick={() => setMobileOpen(false)}
-                          className={({ isActive }) =>
-                            `block rounded-xl px-5 py-3 text-[15px] font-medium transition-all duration-200 ${
-                              isActive
-                                ? "bg-orange-500 text-white shadow-md"
-                                : "text-gray-400 hover:bg-gray-800 hover:text-white"
-                            }`
-                          }
-                        >
+              {/* Children Accordion Submenu */}
+              {!isCollapsed && item.children && isExpanded && (
+                <div className="submenu-list">
+                  {item.children.map((child, cIdx) => {
+                    if (child.isHeader) {
+                      return (
+                        <div key={cIdx} className="submenu-section-header">
                           {child.title}
-                        </NavLink>
-                      ))}
+                        </div>
+                      );
+                    }
 
-                    </div>
+                    const isSelected = activeNav === child.path || (child.path === "/members/list" && (activeNav === "members" || activeNav === "/members/list"));
 
-                  </div>
-
-
-
-              );
-
-            })}
-
-          </nav>
-
-        </div>
-
-        {/* Bottom Profile */}
-
-        <div className="border-t border-gray-800 p-6">
-
-          <div className="flex items-center gap-4">
-
-            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center text-white text-xl font-bold shadow-lg">
-              K
+                    return (
+                      <button
+                        key={child.path}
+                        className={`submenu-item-btn ${isSelected ? 'active' : ''}`}
+                        onClick={() => handleChildClick(item, child)}
+                      >
+                        <span>{child.title}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
             </div>
+          );
+        })}
+      </nav>
 
-            <div className="flex-1">
-
-              <h3 className="text-white text-lg font-semibold">
-                Kodexive Gym
-              </h3>
-
-              <p className="text-sm text-gray-400">
-                Super Admin
-              </p>
-
-            </div>
-
+      {/* Sidebar Footer User Info */}
+      <div
+        className="sidebar-footer"
+        onClick={() => setShowUserMenu(!showUserMenu)}
+      >
+        <div className="footer-user-group">
+          <div className="avatar-orange-wrapper">
+            <div className="avatar-orange">KO</div>
+            <span className="online-dot"></span>
           </div>
 
-          <button
-            className="
-              mt-6
-              w-full
-              rounded-2xl
-              bg-gray-800
-              py-4
-              text-white
-              font-semibold
-              hover:bg-red-600
-              transition-all
-              duration-300
-            "
-          >
-            Logout
-          </button>
-
+          <div className="footer-info">
+            <h4>Kodexive Gym</h4>
+            <p>Super Admin</p>
+          </div>
         </div>
 
-      </aside>
+        <MoreVertical size={16} className="footer-more-icon" />
 
-    </>
+        {/* User Popover Menu */}
+        {showUserMenu && !isCollapsed && (
+          <div className="user-menu-popover" onClick={(e) => e.stopPropagation()}>
+            <div className="popover-header">Switch Active Gym</div>
+            <button className="popover-item" onClick={() => { onActionTrigger('Switched to Kodexive Gym'); setShowUserMenu(false); }}>
+              <Building2 size={15} />
+              <span>Kodexive Gym (Active)</span>
+            </button>
+            <button className="popover-item" onClick={() => { onActionTrigger('Switched to MD Fitness Gym'); setShowUserMenu(false); }}>
+              <Building2 size={15} />
+              <span>MD Fitness Gym</span>
+            </button>
 
+            <div className="popover-header" style={{ marginTop: 6 }}>Account</div>
+            <button className="popover-item" onClick={() => { onActionTrigger('Opened Profile Settings'); setShowUserMenu(false); }}>
+              <UserCheck size={15} />
+              <span>Profile Settings</span>
+            </button>
+            <button className="popover-item danger" onClick={() => {
+              setShowUserMenu(false);
+              if (onSignOut) {
+                onSignOut();
+              } else {
+                onActionTrigger('Logged out successfully');
+              }
+            }}>
+              <LogOut size={15} />
+              <span>Sign Out</span>
+            </button>
+          </div>
+        )}
+      </div>
+    </aside>
   );
-
 }

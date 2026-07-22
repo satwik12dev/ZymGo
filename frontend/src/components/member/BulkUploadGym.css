@@ -1,0 +1,306 @@
+/* BulkUploadGym.css - Zymgoo CRM Bulk Upload Gyms Page */
+
+.bulk-upload-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  padding-bottom: 40px;
+}
+
+/* Header & Breadcrumb */
+.bulk-upload-top-nav {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.btn-icon-back-bulk {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-icon-back-bulk:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.bulk-title-group h1 {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+.bulk-title-group p {
+  font-size: 13.5px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+/* Step Card Base */
+.bulk-step-card {
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 16px;
+  padding: 24px 28px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.step-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.step-badge-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #ea580c;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.step-card-header h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* Step 1: Download Sample CSV */
+.step-1-content {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.btn-download-sample-csv {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #16a34a;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 12px 24px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
+  transition: background-color 0.15s ease;
+}
+
+.btn-download-sample-csv:hover {
+  background-color: #15803d;
+}
+
+.step-1-desc {
+  font-size: 13.5px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Step 2: Column Reference */
+.col-legend-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.legend-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.legend-dot.required { background-color: #ea580c; }
+.legend-dot.optional { background-color: #cbd5e1; }
+
+.column-ref-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px 20px;
+}
+
+@media (max-width: 768px) {
+  .column-ref-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.col-ref-card-item {
+  background-color: #f8fafc;
+  border: 1px solid #f1f5f9;
+  border-radius: 12px;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  position: relative;
+}
+
+.col-ref-card-item::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 18px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.col-ref-card-item.req::before { background-color: #ea580c; }
+.col-ref-card-item.opt::before { background-color: #cbd5e1; }
+
+.col-name-text {
+  font-family: monospace;
+  font-weight: 700;
+  font-size: 13.5px;
+  color: #0f172a;
+  padding-left: 12px;
+}
+
+.col-desc-text {
+  font-size: 12.5px;
+  color: #64748b;
+  padding-left: 12px;
+}
+
+/* Important Rules Box */
+.important-rules-box {
+  background-color: #fefce8;
+  border: 1px solid #fef08a;
+  border-radius: 14px;
+  padding: 18px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.important-rules-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #854d0e;
+}
+
+.rules-list-ul {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rules-list-ul li {
+  font-size: 13px;
+  color: #a16207;
+  font-weight: 500;
+}
+
+/* Step 3: Upload Drag Zone */
+.dropzone-container {
+  border: 2px dashed #cbd5e1;
+  background-color: #f8fafc;
+  border-radius: 14px;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.dropzone-container:hover, .dropzone-container.drag-over {
+  border-color: #ea580c;
+  background-color: #fff7ed;
+}
+
+.dropzone-icon-circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.dropzone-main-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.dropzone-main-text span.browse-link {
+  color: #ea580c;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.dropzone-main-text span.browse-link:hover {
+  text-decoration: underline;
+}
+
+.dropzone-sub-text {
+  font-size: 12.5px;
+  color: #94a3b8;
+}
+
+.btn-upload-process-orange {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #ea580c;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 13px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.3);
+  transition: background-color 0.15s ease;
+}
+
+.btn-upload-process-orange:hover {
+  background-color: #c2410c;
+}
+
+.btn-upload-process-orange:disabled {
+  background-color: #fdba74;
+  cursor: not-allowed;
+  box-shadow: none;
+}

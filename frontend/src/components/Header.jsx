@@ -1,33 +1,38 @@
-import { Bell } from "lucide-react";
-import ProfileDropdown from "./ProfileDropdown";
+import React from 'react';
+import { Bell, ChevronDown, Menu } from 'lucide-react';
 
-export default function Header() {
+export default function Header({ onNotificationClick, onProfileClick, onToggleSidebar }) {
   return (
-    <header className="sticky top-0 z-30 h-20 bg-white border-b border-gray-200">
-
-      <div className="h-full flex items-center justify-end px-8">
-
-        <div className="flex items-center gap-6">
-
-          {/* Notification */}
-
-          <button className="relative">
-
-            <Bell
-              size={22}
-              className="text-gray-500 hover:text-gray-700 transition"
-            />
-
-            <span className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-red-500 border-2 border-white"></span>
-
-          </button>
-
-          <ProfileDropdown />
-
+    <header className="app-header">
+      <div className="header-left" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        <button className="mobile-menu-btn" onClick={onToggleSidebar} title="Toggle Navigation Menu">
+          <Menu size={22} />
+        </button>
+        <div>
+          <h1>Dashboard</h1>
+          <p>Wednesday, July 22, 2026</p>
         </div>
-
       </div>
 
+      <div className="header-right">
+        <button 
+          className="notification-btn" 
+          onClick={onNotificationClick}
+          title="Notifications"
+        >
+          <Bell size={20} />
+          <span className="notification-dot"></span>
+        </button>
+
+        <div className="user-dropdown" onClick={onProfileClick}>
+          <div className="user-avatar-purple">KO</div>
+          <div className="user-info">
+            <span className="user-name">Kodexive Gym</span>
+            <span className="user-role">Super Admin</span>
+          </div>
+          <ChevronDown size={16} className="dropdown-chevron" />
+        </div>
+      </div>
     </header>
   );
 }

@@ -1,0 +1,264 @@
+/* OnboardingPerformance.css - Zymgoo CRM Sales/Employee Onboarding Performance Page */
+
+.onboarding-performance-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  padding-bottom: 40px;
+}
+
+/* Page Header */
+.onboarding-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.onboarding-header h1 {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+.onboarding-header p {
+  font-size: 13.5px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Dark Orange Hero Banner */
+.onboarding-hero-banner {
+  background: linear-gradient(135deg, #c2410c 0%, #9a3412 100%);
+  border-radius: 14px;
+  padding: 24px 28px;
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(194, 65, 12, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.onboarding-hero-banner h2 {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.onboarding-hero-banner p {
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+}
+
+/* Filter Card */
+.onboarding-filter-card {
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 14px;
+  padding: 20px 24px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.filter-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 180px;
+}
+
+.filter-input-group label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.filter-date-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.filter-date-input {
+  width: 100%;
+  padding: 10px 14px;
+  padding-right: 36px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #0f172a;
+  outline: none;
+  background-color: #ffffff;
+  transition: border-color 0.15s;
+}
+
+.filter-date-input:focus {
+  border-color: #ea580c;
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.12);
+}
+
+.filter-calendar-icon {
+  position: absolute;
+  right: 12px;
+  color: #94a3b8;
+  pointer-events: none;
+}
+
+.filter-select-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #0f172a;
+  outline: none;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.filter-select-input:focus {
+  border-color: #ea580c;
+}
+
+.filter-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-filter-apply {
+  background-color: #ea580c;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 13.5px;
+  padding: 10.5px 24px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25);
+  transition: background-color 0.15s;
+}
+
+.btn-filter-apply:hover {
+  background-color: #c2410c;
+}
+
+.btn-filter-reset {
+  background-color: #e2e8f0;
+  color: #475569;
+  font-weight: 600;
+  font-size: 13.5px;
+  padding: 10.5px 20px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.btn-filter-reset:hover {
+  background-color: #cbd5e1;
+  color: #0f172a;
+}
+
+/* 3 Stat Cards Row */
+.onboarding-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .onboarding-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.onboarding-stat-card {
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 14px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+}
+
+.onboarding-stat-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #64748b;
+}
+
+.onboarding-stat-num {
+  font-size: 26px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+.onboarding-stat-num.green { color: #16a34a; }
+.onboarding-stat-num.blue { color: #2563eb; }
+
+/* Leaderboard & Details Card Table */
+.onboarding-table-card {
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+  display: flex;
+  flex-direction: column;
+}
+
+.onboarding-table-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.onboarding-table-header h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.onboarding-custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.onboarding-custom-table th {
+  background-color: #fafafa;
+  padding: 14px 24px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #334155;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.onboarding-custom-table td {
+  padding: 16px 24px;
+  font-size: 13.5px;
+  color: #1e293b;
+  border-bottom: 1px solid #f8fafc;
+}
+
+.onboarding-empty-row {
+  padding: 24px;
+  text-align: left;
+  font-size: 13.5px;
+  color: #94a3b8;
+  font-weight: 500;
+  background-color: #ffffff;
+}

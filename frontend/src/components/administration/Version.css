@@ -1,0 +1,145 @@
+/* Version.css - Administration App Version History Page Styling */
+
+.version-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  padding-bottom: 48px;
+  font-family: var(--font-family, 'Plus Jakarta Sans', sans-serif);
+  animation: versionFadeIn 0.3s ease-out;
+}
+
+@keyframes versionFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Page Header */
+.version-hero-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.version-hero-title h1 {
+  font-size: 26px;
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.version-hero-title p {
+  font-size: 14px;
+  color: #64748B;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+.btn-roles-permissions-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #F05223 0%, #D94418 100%);
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(240, 82, 35, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-roles-permissions-link:hover {
+  background: linear-gradient(135deg, #ff6334 0%, #e04b1e 100%);
+  box-shadow: 0 6px 18px rgba(240, 82, 35, 0.4);
+}
+
+/* Version History Table Box */
+.version-table-card-box {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 18px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.version-custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13.5px;
+}
+
+.version-custom-table th {
+  background: #F8FAFC;
+  padding: 14px 20px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.version-custom-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid #F1F5F9;
+  color: #334155;
+  vertical-align: middle;
+}
+
+.version-custom-table tr:last-child td {
+  border-bottom: none;
+}
+
+.version-custom-table tr:hover {
+  background-color: #F8FAFC;
+}
+
+.old-ver-text {
+  font-weight: 800;
+  color: #0F172A;
+}
+
+.new-ver-text {
+  font-weight: 600;
+  color: #475569;
+}
+
+.ver-link-text {
+  font-size: 12px;
+  color: #64748B;
+  max-width: 450px;
+  word-break: break-all;
+  line-height: 1.3;
+}
+
+.used-by-text {
+  font-size: 13px;
+  color: #475569;
+  font-weight: 500;
+}
+
+.type-pill-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  background: #FAF5FF;
+  color: #9333EA;
+  border: 1px solid #F3E8FF;
+}
+
+.updated-at-text {
+  font-size: 12px;
+  color: #64748B;
+  line-height: 1.3;
+}

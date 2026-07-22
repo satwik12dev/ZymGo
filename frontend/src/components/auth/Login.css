@@ -1,0 +1,320 @@
+/* Login.css - Zymgoo CRM Login Page Styling */
+
+.login-page-container {
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 30%, #1e293b 0%, #0f172a 60%, #090d16 100%);
+  padding: 24px;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  font-family: var(--font-family, 'Plus Jakarta Sans', sans-serif);
+  overflow-y: auto;
+}
+
+.login-wrapper {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: loginFadeIn 0.4s ease-out;
+}
+
+@keyframes loginFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Brand Branding Header */
+.login-brand-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.login-logo-icon {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, #F05223 0%, #d94418 100%);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  box-shadow: 0 10px 25px rgba(240, 82, 35, 0.4);
+  margin-bottom: 18px;
+  transition: transform 0.2s ease;
+}
+
+.login-logo-icon:hover {
+  transform: scale(1.04);
+}
+
+.login-brand-header h1 {
+  font-size: 28px;
+  font-weight: 800;
+  color: #FFFFFF;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+.login-brand-header p {
+  font-size: 14px;
+  color: #94A3B8;
+  font-weight: 500;
+}
+
+/* Login Card Form Box */
+.login-card {
+  width: 100%;
+  background: rgba(30, 41, 59, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Demo Helper Box */
+.demo-banner-box {
+  background: rgba(240, 82, 35, 0.1);
+  border: 1px dashed rgba(240, 82, 35, 0.35);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.demo-banner-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.demo-banner-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #F05223;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.demo-banner-sub {
+  font-size: 12px;
+  color: #CBD5E1;
+}
+
+.btn-fill-demo {
+  padding: 6px 12px;
+  background: rgba(240, 82, 35, 0.2);
+  border: 1px solid var(--color-primary, #F05223);
+  color: #FFFFFF;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.btn-fill-demo:hover {
+  background: #F05223;
+  color: #FFFFFF;
+}
+
+/* Form Groups */
+.login-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.login-field-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #CBD5E1;
+}
+
+.login-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-leading-icon {
+  position: absolute;
+  left: 14px;
+  color: #F05223;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+
+.login-input-field {
+  width: 100%;
+  height: 48px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 0 44px 0 44px;
+  font-size: 14px;
+  color: #FFFFFF;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.login-input-field::placeholder {
+  color: #64748B;
+}
+
+.login-input-field:focus {
+  border-color: #F05223;
+  background: rgba(15, 23, 42, 0.85);
+  box-shadow: 0 0 0 3px rgba(240, 82, 35, 0.2);
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 14px;
+  color: #64748B;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.password-toggle-btn:hover {
+  color: #FFFFFF;
+}
+
+/* Row Options: Remember Me & Forgot Password */
+.login-options-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.remember-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #94A3B8;
+  cursor: pointer;
+  user-select: none;
+}
+
+.remember-checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: #F05223;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.forgot-password-link {
+  color: #F05223;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.forgot-password-link:hover {
+  opacity: 0.85;
+  text-decoration: underline;
+}
+
+/* Error Message */
+.login-error-msg {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #F87171;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Submit Button */
+.btn-login-submit {
+  width: 100%;
+  height: 48px;
+  background: linear-gradient(135deg, #F05223 0%, #d94418 100%);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(240, 82, 35, 0.35);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-login-submit:hover {
+  background: linear-gradient(135deg, #ff6334 0%, #e04b1e 100%);
+  box-shadow: 0 6px 20px rgba(240, 82, 35, 0.5);
+  transform: translateY(-1px);
+}
+
+.btn-login-submit:active {
+  transform: translateY(0);
+}
+
+/* Quick One Click Demo Login Button */
+.btn-quick-demo {
+  width: 100%;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #E2E8F0;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-quick-demo:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Footer Copyright */
+.login-footer-copy {
+  margin-top: 32px;
+  font-size: 13px;
+  color: #64748B;
+  text-align: center;
+}
