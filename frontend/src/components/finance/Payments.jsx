@@ -8,7 +8,9 @@ import {
   Calendar,
   Search,
   Download,
-  FileText
+  FileText,
+  Filter,
+  RotateCcw
 } from 'lucide-react';
 import './Payments.css';
 
@@ -294,7 +296,7 @@ export default function Payments({ onActionTrigger, onNavigateToInvoices }) {
 
       {/* Filter Card */}
       <div className="payments-filter-card">
-        <div className="payments-filter-row-top">
+        <div className="payments-filter-row-main">
           <div className="payments-search-wrapper">
             <Search size={16} />
             <input
@@ -310,8 +312,7 @@ export default function Payments({ onActionTrigger, onNavigateToInvoices }) {
           </div>
 
           <select
-            className="audit-select-field"
-            style={{ width: 140 }}
+            className="payments-select-field"
             value={statusFilter}
             onChange={(e) => {
               setStatusFilter(e.target.value);
@@ -325,8 +326,7 @@ export default function Payments({ onActionTrigger, onNavigateToInvoices }) {
           </select>
 
           <select
-            className="audit-select-field"
-            style={{ width: 150 }}
+            className="payments-select-field"
             value={methodFilter}
             onChange={(e) => {
               setMethodFilter(e.target.value);
@@ -339,52 +339,66 @@ export default function Payments({ onActionTrigger, onNavigateToInvoices }) {
             <option value="UPI">UPI</option>
           </select>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#64748b' }}>
-            <span>From</span>
-            <input
-              type="date"
-              className="audit-date-input-field"
-              style={{ width: 145 }}
-              value={fromDate}
-              onChange={(e) => setFromDate(e.target.value)}
-            />
-          </div>
-        </div>
-
-        <div className="payments-filter-row-bottom">
-          <div className="payments-filter-controls-group">
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#64748b' }}>
-              <span>To</span>
+          <div className="payments-date-range-group">
+            <div className="date-field-wrapper">
+              <span className="date-field-label">From</span>
               <input
                 type="date"
-                className="audit-date-input-field"
-                style={{ width: 145 }}
+                className="payments-date-input"
+                value={fromDate}
+                onChange={(e) => setFromDate(e.target.value)}
+              />
+            </div>
+            <div className="date-field-wrapper">
+              <span className="date-field-label">To</span>
+              <input
+                type="date"
+                className="payments-date-input"
                 value={toDate}
                 onChange={(e) => setToDate(e.target.value)}
               />
             </div>
+          </div>
+        </div>
 
+        <div className="payments-filter-row-actions">
+          <div className="payments-page-size-group">
             <select
-              className="audit-select-field"
-              style={{ width: 120 }}
+              className="payments-select-field per-page-select"
               value={pageSize}
               onChange={handlePageSizeChange}
             >
-              <option value={10}>10/page</option>
-              <option value={20}>20/page</option>
-              <option value={50}>50/page</option>
-              <option value={100}>100/page</option>
+              <option value={10}>10 / page</option>
+              <option value={20}>20 / page</option>
+              <option value={50}>50 / page</option>
+              <option value={100}>100 / page</option>
             </select>
-
-            <button className="btn-invoice-search-navy" onClick={() => notify(`Searched ${filteredPayments.length} payments`)}>
-              Search
-            </button>
           </div>
 
-          <button className="btn-export-csv-green" onClick={handleExportCSV}>
-            <Download size={15} />
-            <span>Export CSV</span>
-          </button>
+          <div className="payments-action-buttons">
+            <button className="btn-apply-filters" onClick={() => notify(`Searched ${filteredPayments.length} payments`)}>
+              <Search size={15} />
+              <span>Search</span>
+            </button>
+
+            <button className="btn-reset-filters" onClick={() => {
+              setSearchQuery('');
+              setStatusFilter('All Status');
+              setMethodFilter('All Methods');
+              setFromDate('');
+              setToDate('');
+              setCurrentPage(1);
+              notify('Reset all payment filters');
+            }}>
+              <RotateCcw size={15} />
+              <span>Reset</span>
+            </button>
+
+            <button className="btn-export-csv-green" onClick={handleExportCSV}>
+              <Download size={15} />
+              <span>Export CSV</span>
+            </button>
+          </div>
         </div>
       </div>
 

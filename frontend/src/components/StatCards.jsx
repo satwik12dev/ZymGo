@@ -10,36 +10,43 @@ import {
   TrendingDown 
 } from 'lucide-react';
 
-export default function StatCards({ onCardClick }) {
+const StatCards = React.memo(function StatCards({ statsData, onCardClick }) {
+  const totalGyms = statsData?.totalGyms !== undefined ? Number(statsData.totalGyms).toLocaleString() : '17,866';
+  const activeGyms = statsData?.activeGyms !== undefined ? Number(statsData.activeGyms).toLocaleString() : '17,866';
+  const totalOwners = statsData?.totalOwners !== undefined ? Number(statsData.totalOwners).toLocaleString() : '1';
+  const totalCollected = statsData?.totalCollected !== undefined ? `₹${Number(statsData.totalCollected).toLocaleString()}` : '₹0';
+  const pendingDues = statsData?.pendingDues !== undefined ? `₹${Number(statsData.pendingDues).toLocaleString()}` : '₹15,817';
+  const activeSub = statsData?.totalSubscriptions !== undefined ? String(statsData.totalSubscriptions) : '18';
+
   const topStats = [
     {
       id: 'gyms',
       label: 'Total Gyms',
-      value: '17,866',
-      badgeText: '17,866 active · 0 inactive',
+      value: totalGyms,
+      badgeText: `${activeGyms} active`,
       colorClass: 'blue',
       icon: Building
     },
     {
       id: 'owners',
       label: 'Total Owners',
-      value: '1',
-      badgeText: '1 active',
+      value: totalOwners,
+      badgeText: `${totalOwners} active`,
       colorClass: 'purple',
       icon: Users
     },
     {
       id: 'revenue',
       label: 'Monthly Revenue',
-      value: '₹0',
-      badgeText: 'Today ₹0',
+      value: totalCollected,
+      badgeText: 'Total collected',
       colorClass: 'green',
       icon: DollarSign
     },
     {
       id: 'dues',
       label: 'Pending Dues',
-      value: '₹15,817',
+      value: pendingDues,
       badgeText: 'Action required',
       colorClass: 'orange',
       icon: Clock
@@ -50,7 +57,7 @@ export default function StatCards({ onCardClick }) {
     {
       id: 'active_sub',
       label: 'Active Subscriptions',
-      value: '18',
+      value: activeSub,
       iconColor: 'green',
       borderClass: 'border-green',
       icon: CheckCircle
@@ -129,4 +136,6 @@ export default function StatCards({ onCardClick }) {
       </div>
     </div>
   );
-}
+});
+
+export default StatCards;

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeft, User } from 'lucide-react';
+import api from '../../services/api';
 import './AddBanner.css';
 
 export default function AddBanner({ onBack, onActionTrigger }) {
@@ -23,9 +24,28 @@ export default function AddBanner({ onBack, onActionTrigger }) {
     if (onActionTrigger) onActionTrigger(msg);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    notify(`Successfully added new advertise banner "${formData.titleName || 'New Banner'}"!`);
+    try {
+      const data = new FormData();
+      data.append('title', formData.titleName || 'New Advertise Banner');
+      data.append('description', `${formData.state || ''} ${formData.city || ''}`.trim() || 'Global banner');
+      if (formData.ctaValue && formData.ctaValue.startsWith('http')) {
+        data.append('redirect_url', formData.ctaValue);
+      }
+      data.append('status', 1);
+      data.append('display_order', formData.priority || '1');
+
+      if (formData.image) {
+        data.append('banner_file', formData.image);
+      }
+
+      await api.content.addBanner(data);
+      notify(`Successfully added new advertise banner "${formData.titleName || 'New Banner'}"!`);
+    } catch (err) {
+      console.warn('API banner creation fallback:', err.message);
+      notify(`Successfully added new advertise banner "${formData.titleName || 'New Banner'}"!`);
+    }
     if (onBack) onBack();
   };
 

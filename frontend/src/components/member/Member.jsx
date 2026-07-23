@@ -19,6 +19,7 @@ import {
   Filter
 } from 'lucide-react';
 import ConfirmDeleteModal from '../ConfirmDeleteModal';
+import EditMemberModal from './EditMemberModal';
 import {
   ResponsiveContainer,
   BarChart,
@@ -215,7 +216,13 @@ const topCitiesData = [
   { city: 'Nagpur', value: 2, color: '#84cc16' }
 ];
 
-export default function Member({ activeNav, onActionTrigger, onSelectMember }) {
+export default function Member({
+  activeNav,
+  onActionTrigger,
+  onSelectMember,
+  onNavigateToAddMember,
+  onNavigateToBulkUpload
+}) {
   const [membersList, setMembersList] = useState(initialMembersData);
   const [searchQuery, setSearchQuery] = useState('');
   const [stateFilter, setStateFilter] = useState('All');
@@ -344,10 +351,8 @@ export default function Member({ activeNav, onActionTrigger, onSelectMember }) {
 
   // Delete Member
   const handleDeleteMember = (id, name) => {
-    if (window.confirm(`Are you sure you want to delete member "${name}"?`)) {
-      setMembersList(membersList.filter(m => m.id !== id));
-      notify(`Member "${name}" deleted.`);
-    }
+    setMembersList(membersList.filter(m => m.id !== id));
+    notify(`Member "${name}" deleted.`);
   };
 
   return (
@@ -360,11 +365,29 @@ export default function Member({ activeNav, onActionTrigger, onSelectMember }) {
         </div>
 
         <div className="members-header-actions">
-          <button className="btn-add-member" onClick={() => setIsAddModalOpen(true)}>
+          <button
+            className="btn-add-member"
+            onClick={() => {
+              if (onNavigateToAddMember) {
+                onNavigateToAddMember();
+              } else {
+                setIsAddModalOpen(true);
+              }
+            }}
+          >
             <Plus size={18} />
             <span>Add Member</span>
           </button>
-          <button className="btn-bulk-upload" onClick={() => setIsBulkModalOpen(true)}>
+          <button
+            className="btn-bulk-upload"
+            onClick={() => {
+              if (onNavigateToBulkUpload) {
+                onNavigateToBulkUpload();
+              } else {
+                setIsBulkModalOpen(true);
+              }
+            }}
+          >
             <Upload size={18} />
             <span>Bulk Upload</span>
           </button>
@@ -916,99 +939,16 @@ export default function Member({ activeNav, onActionTrigger, onSelectMember }) {
       )}
 
       {/* Modal: Edit Member */}
-      {editingMember && (
-        <div className="modal-backdrop" onClick={() => setEditingMember(null)}>
-          <div className="modal-container" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
-              <h3>Edit Member - {editingMember.name}</h3>
-              <button className="modal-close-btn" onClick={() => setEditingMember(null)}>
-                <X size={18} />
-              </button>
-            </div>
-
-            <form onSubmit={handleEditSubmit} className="modal-body">
-              <div className="form-group">
-                <label>Name</label>
-                <input
-                  type="text"
-                  value={editingMember.name}
-                  onChange={(e) => setEditingMember({ ...editingMember, name: e.target.value })}
-                />
-              </div>
-
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Phone</label>
-                  <input
-                    type="text"
-                    value={editingMember.phone}
-                    onChange={(e) => setEditingMember({ ...editingMember, phone: e.target.value })}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Email</label>
-                  <input
-                    type="email"
-                    value={editingMember.email}
-                    onChange={(e) => setEditingMember({ ...editingMember, email: e.target.value })}
-                  />
-                </div>
-              </div>
-
-              <div className="form-row">
-                <div className="form-group">
-                  <label>City</label>
-                  <input
-                    type="text"
-                    value={editingMember.city}
-                    onChange={(e) => setEditingMember({ ...editingMember, city: e.target.value })}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>State</label>
-                  <input
-                    type="text"
-                    value={editingMember.state}
-                    onChange={(e) => setEditingMember({ ...editingMember, state: e.target.value })}
-                  />
-                </div>
-              </div>
-
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Status</label>
-                  <select
-                    value={editingMember.status}
-                    onChange={(e) => setEditingMember({ ...editingMember, status: e.target.value })}
-                  >
-                    <option value="Active">Active</option>
-                    <option value="Inactive">Inactive</option>
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label>Verified</label>
-                  <select
-                    value={editingMember.verified ? 'yes' : 'no'}
-                    onChange={(e) => setEditingMember({ ...editingMember, verified: e.target.value === 'yes' })}
-                  >
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="modal-footer">
-                <button type="button" className="btn-secondary" onClick={() => setEditingMember(null)}>
-                  Cancel
-                </button>
-                <button type="submit" className="btn-primary-orange">
-                  Save Changes
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
+      <EditMemberModal
+        isOpen={!!editingMember}
+        member={editingMember}
+        onClose={() => setEditingMember(null)}
+        onSave={(updatedData) => {
+          setMembersList(membersList.map(m => m.id === editingMember.id ? { ...m, ...updatedData } : m));
+          notify(`Member "${updatedData.name}" updated successfully!`);
+          setEditingMember(null);
+        }}
+      />
 
       {/* Modal: Bulk Upload */}
       {isBulkModalOpen && (

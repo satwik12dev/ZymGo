@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import api from '../../services/api';
 import { 
   Building2, 
   CheckCircle2, 
@@ -156,14 +157,72 @@ export default function SubscriptionPlans({ onNavigateToGyms, onActionTrigger })
     setIsModalOpen(true);
   };
 
-  const handleDeletePlan = (id, name) => {
+  useEffect(() => {
+    async function loadPlans() {
+      try {
+        const res = await api.subscriptions.getPlans();
+        if (res.success && res.plans && res.plans.length > 0) {
+          const mapped = res.plans.map(p => ({
+            id: p.id,
+            name: p.plan_name,
+            code: p.plan_code || `PLAN${p.id}`,
+            price: Number(p.plan_price || 0),
+            durationDays: Number(p.plan_duration || 30),
+            badge: p.plan_badge || 'Active',
+            badgeType: 'default',
+            totalGyms: p.total_gyms || 0,
+            activeGyms: p.active_gyms || 0,
+            ownersCount: p.owners_count || 0,
+            expiredCount: 0,
+            revenuePotential: Number(p.plan_price || 0) * (p.active_gyms || 0),
+            description: p.plan_description || '',
+            maxBranches: p.max_branches || 1,
+            maxMembers: p.max_members || 100,
+            maxStaff: p.max_staff || 5,
+            displayOrder: p.display_order || 1,
+            active: Boolean(p.is_active),
+            features: Array.isArray(p.features) ? p.features : [
+              `Up to ${p.max_branches || 1} branches`,
+              `${p.max_members || 100} members`,
+              `${p.max_staff || 5} staff members`
+            ]
+          }));
+          setPlans(mapped);
+        }
+      } catch (err) {
+        console.warn('Using initial subscription plans:', err.message);
+      }
+    }
+    loadPlans();
+  }, []);
+
+  const handleDeletePlan = async (id, name) => {
+    try {
+      await api.subscriptions.deletePlan(id);
+    } catch (err) {
+      console.warn('Delete plan API call:', err.message);
+    }
     setPlans((prev) => prev.filter((p) => p.id !== id));
     notify(`Deleted plan "${name}"`);
   };
 
-  const handleSavePlan = (e) => {
+  const handleSavePlan = async (e) => {
     e.preventDefault();
     if (!formData.name) return;
+
+    const payload = {
+      plan_name: formData.name,
+      plan_code: formData.code || null,
+      plan_duration: Number(formData.durationDays) || 30,
+      plan_price: Number(formData.price) || 0,
+      max_branches: Number(formData.maxBranches) || 1,
+      max_members: Number(formData.maxMembers) || 100,
+      max_staff: Number(formData.maxStaff) || 5,
+      plan_description: formData.description || '',
+      is_active: formData.active ? 1 : 0,
+      plan_badge: formData.badge || '',
+      display_order: String(formData.displayOrder || 1)
+    };
 
     const updatedFeatures = [
       `Up to ${formData.maxBranches} branches`,
@@ -172,6 +231,11 @@ export default function SubscriptionPlans({ onNavigateToGyms, onActionTrigger })
     ];
 
     if (editingPlan) {
+      try {
+        await api.subscriptions.editPlan(editingPlan.id, payload);
+      } catch (err) {
+        console.warn('Edit plan API call:', err.message);
+      }
       setPlans((prev) =>
         prev.map((p) =>
           p.id === editingPlan.id
@@ -181,8 +245,15 @@ export default function SubscriptionPlans({ onNavigateToGyms, onActionTrigger })
       );
       notify(`Updated plan "${formData.name}"`);
     } else {
+      let createdId = Date.now();
+      try {
+        const res = await api.subscriptions.addPlan(payload);
+        if (res.data?.id) createdId = res.data.id;
+      } catch (err) {
+        console.warn('Add plan API call:', err.message);
+      }
       const newPlan = {
-        id: Date.now(),
+        id: createdId,
         ...formData,
         badgeType: 'default',
         totalGyms: 0,

@@ -8,7 +8,10 @@ import {
   Plus, 
   Send, 
   Bell,
-  X
+  X,
+  Search,
+  Filter,
+  RotateCcw
 } from 'lucide-react';
 import './Campaigns.css';
 
@@ -108,6 +111,7 @@ const initialCampaigns = [
 
 export default function Campaigns({ onActionTrigger }) {
   const [campaignsList, setCampaignsList] = useState(initialCampaigns);
+  const [searchQuery, setSearchQuery] = useState('');
   const [typeFilter, setTypeFilter] = useState('All Types');
   const [statusFilter, setStatusFilter] = useState('All Status');
   const [isNewModalOpen, setIsNewModalOpen] = useState(false);
@@ -126,11 +130,13 @@ export default function Campaigns({ onActionTrigger }) {
 
   const filteredCampaigns = useMemo(() => {
     return campaignsList.filter((c) => {
+      const q = searchQuery.trim().toLowerCase();
+      const matchesSearch = !q || c.title.toLowerCase().includes(q) || (c.messagePreview && c.messagePreview.toLowerCase().includes(q));
       const matchesType = typeFilter === 'All Types' || c.type === typeFilter;
       const matchesStatus = statusFilter === 'All Status' || c.status === statusFilter;
-      return matchesType && matchesStatus;
+      return matchesSearch && matchesType && matchesStatus;
     });
-  }, [campaignsList, typeFilter, statusFilter]);
+  }, [campaignsList, searchQuery, typeFilter, statusFilter]);
 
   const handleSendCampaign = (id, title) => {
     setCampaignsList((prev) =>
@@ -236,9 +242,19 @@ export default function Campaigns({ onActionTrigger }) {
 
       {/* Filter Bar Card */}
       <div className="campaigns-filter-card">
+        <div className="campaigns-search-wrapper">
+          <Search size={16} />
+          <input
+            type="text"
+            className="campaigns-search-input"
+            placeholder="Search campaign title, audience..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+
         <select 
-          className="audit-select-field"
-          style={{ width: 140 }}
+          className="campaigns-select-field"
           value={typeFilter}
           onChange={(e) => setTypeFilter(e.target.value)}
         >
@@ -249,8 +265,7 @@ export default function Campaigns({ onActionTrigger }) {
         </select>
 
         <select 
-          className="audit-select-field"
-          style={{ width: 140 }}
+          className="campaigns-select-field"
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
         >
@@ -259,9 +274,22 @@ export default function Campaigns({ onActionTrigger }) {
           <option value="Completed">Completed</option>
         </select>
 
-        <button className="btn-filter-navy" onClick={() => notify(`Filtered ${filteredCampaigns.length} campaigns`)}>
-          Filter
-        </button>
+        <div className="campaigns-filter-buttons">
+          <button className="btn-apply-filters" onClick={() => notify(`Filtered ${filteredCampaigns.length} campaigns`)}>
+            <Filter size={15} />
+            <span>Filter</span>
+          </button>
+
+          <button className="btn-reset-filters" onClick={() => {
+            setSearchQuery('');
+            setTypeFilter('All Types');
+            setStatusFilter('All Status');
+            notify('Reset campaign filters');
+          }}>
+            <RotateCcw size={15} />
+            <span>Reset</span>
+          </button>
+        </div>
       </div>
 
       {/* Table Card */}

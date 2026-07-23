@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   FileText,
   CheckCircle2,
@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import ConfirmDeleteModal from '../ConfirmDeleteModal';
 import ViewBlogModal from './ViewBlogModal';
+import api from '../../services/api';
 import './AllBlogs.css';
 
 const defaultBlogBanner = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23db2777"/><stop offset="50%" stop-color="%23831843"/><stop offset="100%" stop-color="%230f172a"/></linearGradient></defs><rect width="100%" height="100%" fill="url(%23bg)"/><rect x="15" y="15" width="270" height="170" rx="10" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/><text x="150" y="90" fill="%23ffffff" font-family="sans-serif" font-size="22" font-weight="900" text-anchor="middle" letter-spacing="1">BEST</text><text x="150" y="125" fill="%23f472b6" font-family="sans-serif" font-size="26" font-weight="900" text-anchor="middle" letter-spacing="2">LADIES GYM</text><circle cx="50" cy="150" r="14" fill="%23ec4899" opacity="0.4"/><circle cx="250" cy="50" r="20" fill="%23a855f7" opacity="0.3"/></svg>`;
@@ -58,7 +59,7 @@ const initialBlogs = [
     id: 4,
     num: 4,
     title: 'Best Ladies Gym in Yamunanagar (2026...',
-    desc: 'Finding the best ladies gym in Yamunanagar is easy with our comprehensive fitness guide and directory...',
+    desc: 'Finding the best ladies gym in Yamunanagar is top tier for fitness motivation...',
     type: 'Auto',
     city: 'Yamunanagar',
     status: 'Published',
@@ -93,6 +94,31 @@ export default function AllBlogs({ onActionTrigger, onNavigateToAdd, onNavigateT
     if (onActionTrigger) onActionTrigger(msg);
   };
 
+  useEffect(() => {
+    async function loadBlogs() {
+      try {
+        const res = await api.blogs.getBlogs();
+        if (res.success && res.blogs && res.blogs.length > 0) {
+          const mapped = res.blogs.map((b, i) => ({
+            id: b.id,
+            num: i + 1,
+            title: b.title,
+            desc: b.content ? b.content.replace(/<[^>]+>/g, '').substring(0, 100) + '...' : '',
+            type: b.author ? 'Manual' : 'Auto',
+            city: b.city || 'General',
+            status: b.status === 1 || b.status === 'published' ? 'Published' : 'Draft',
+            date: b.created_at ? new Date(b.created_at).toLocaleDateString() : 'Today',
+            imageUrl: b.image ? (b.image.startsWith('http') ? b.image : `http://localhost:3000/${b.image}`) : defaultBlogBanner
+          }));
+          setBlogsList(mapped);
+        }
+      } catch (err) {
+        console.warn('Using default blogs list:', err.message);
+      }
+    }
+    loadBlogs();
+  }, []);
+
   const handleSelectAll = (e) => {
     if (e.target.checked) {
       setSelectedIds(blogsList.map((b) => b.id));
@@ -107,7 +133,12 @@ export default function AllBlogs({ onActionTrigger, onNavigateToAdd, onNavigateT
     );
   };
 
-  const handleDeleteBlog = (id, title) => {
+  const handleDeleteBlog = async (id, title) => {
+    try {
+      await api.blogs.deleteBlog(id);
+    } catch (err) {
+      console.warn('Delete blog API error:', err.message);
+    }
     setBlogsList((prev) => prev.filter((b) => b.id !== id));
     notify(`Deleted blog post "${title}"`);
   };

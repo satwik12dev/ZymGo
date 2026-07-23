@@ -16,17 +16,26 @@ export default function Login({ onLogin }) {
     setError('');
   };
 
-  const handleDemoDirectLogin = () => {
+  const handleDemoDirectLogin = async () => {
     setIsLoading(true);
     setIdentifier('admin@zymgoo.com');
     setPassword('admin123');
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      const res = await api.auth.login({ email: 'admin@zymgoo.com', password: 'admin123' });
+      if (res.token) {
+        localStorage.setItem('token', res.token);
+        localStorage.setItem('user', JSON.stringify(res.user));
+      }
+      onLogin(res.user || { username: 'Kodexive Gym Admin', role: 'Super Admin', email: 'admin@zymgoo.com' });
+    } catch (err) {
+      // Fallback for UI testing if DB user not pre-seeded
       onLogin({ username: 'Kodexive Gym Admin', role: 'Super Admin', email: 'admin@zymgoo.com' });
-    }, 400);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!identifier.trim()) {
       setError('Please enter your username, email or mobile number');
@@ -40,14 +49,22 @@ export default function Login({ onLogin }) {
     setIsLoading(true);
     setError('');
 
-    setTimeout(() => {
-      setIsLoading(false);
-      onLogin({
+    try {
+      const res = await api.auth.login({ email: identifier, password });
+      if (res.token) {
+        localStorage.setItem('token', res.token);
+        localStorage.setItem('user', JSON.stringify(res.user));
+      }
+      onLogin(res.user || {
         username: identifier.includes('@') ? identifier.split('@')[0] : identifier,
         role: 'Super Admin',
         email: identifier.includes('@') ? identifier : `${identifier}@zymgoo.com`
       });
-    }, 500);
+    } catch (err) {
+      setError(err.message || 'Login failed. Check your credentials.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

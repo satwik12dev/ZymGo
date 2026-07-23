@@ -285,11 +285,11 @@
 
 .gym-table-header h4 {
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 800;
   color: #0f172a;
 }
 
-.gym-table-header span {
+.showing-counter-text {
   font-size: 13px;
   color: #94a3b8;
   font-weight: 500;
@@ -335,7 +335,7 @@
 .gym-info-cell {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .gym-avatar-circle {
@@ -353,34 +353,51 @@
 .gym-details-column {
   display: flex;
   flex-direction: column;
+  gap: 2px;
 }
 
 .gym-title-name {
   font-weight: 700;
   color: #0f172a;
   font-size: 14px;
+  line-height: 1.3;
 }
 
 .gym-subtitle-text {
   font-size: 12px;
-  color: #64748b;
-  margin-top: 1px;
+  color: #94a3b8;
+  font-weight: 500;
 }
 
 .gym-seo-code {
-  font-size: 11.5px;
-  color: #94a3b8;
+  font-size: 11px;
+  color: #cbd5e1;
   font-family: monospace;
+}
+
+/* Location & Owner Text Styles */
+.location-city,
+.owner-name {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.location-state,
+.owner-phone {
+  font-size: 12px;
+  color: #94a3b8;
+  font-weight: 500;
 }
 
 /* Subscription Pill */
 .subscription-pill-grey {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   background-color: #f1f5f9;
   color: #64748b;
-  padding: 4px 10px;
+  padding: 4px 12px;
   border-radius: 9999px;
   font-size: 12px;
   font-weight: 600;
@@ -390,10 +407,97 @@
 .rating-no-reviews {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   font-size: 12px;
   color: #94a3b8;
   font-weight: 500;
+}
+
+.star-icon-muted {
+  color: #cbd5e1;
+  fill: #cbd5e1;
+}
+
+/* Status Pills Stack */
+.status-pills-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.status-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.status-badge-pill.active {
+  background: #dcfce7;
+  color: #16a34a;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+}
+
+.status-badge-pill.unverified {
+  background: #f1f5f9;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.status-badge-pill.pending {
+  background: #fefce8;
+  color: #d97706;
+  font-weight: 700;
+  border: 1px solid #fef08a;
+}
+
+.status-badge-pill.approved {
+  background: #dcfce7;
+  color: #15803d;
+  font-weight: 700;
+}
+
+.dot-green {
+  color: #16a34a;
+  font-size: 8px;
+}
+
+.pill-minus-symbol {
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+/* Action Buttons Row */
+.action-buttons-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
+.action-btn-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  color: #64748b;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.action-btn-icon:hover {
+  background: #f1f5f9;
+  color: #0f172a;
 }
 
 /* Mobile Responsiveness for Gym Management Page */

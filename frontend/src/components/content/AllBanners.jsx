@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import api from '../../services/api';
 import { 
   Image as ImageIcon, 
   CheckCircle2, 
@@ -179,6 +180,37 @@ export default function AllBanners({ onActionTrigger, onNavigateToAdd, onNavigat
       return matchesSearch && matchesType && matchesPosition && matchesStatus;
     });
   }, [bannersList, searchQuery, typeFilter, positionFilter, statusFilter]);
+
+  useEffect(() => {
+    async function loadBanners() {
+      try {
+        const res = await api.content.getBanners();
+        if (res.success && res.data && res.data.length > 0) {
+          const mapped = res.data.map(b => ({
+            id: b.id,
+            title: b.title,
+            category: 'Ecommerce',
+            categoryTheme: 'purple',
+            location: b.description || 'Global',
+            impressions: 0,
+            clicks: 0,
+            ctr: '0%',
+            type: 'Url',
+            ctaText: b.redirect_url || 'View',
+            dateRange: 'Active',
+            posBadge: String(b.display_order || 1),
+            isActive: Boolean(b.status),
+            isExpired: false,
+            imageUrl: b.image_url ? (b.image_url.startsWith('http') ? b.image_url : `http://localhost:3000/${b.image_url}`) : 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=600&q=80'
+          }));
+          setBannersList(mapped);
+        }
+      } catch (err) {
+        console.warn('Using default banners:', err.message);
+      }
+    }
+    loadBanners();
+  }, []);
 
   const handleDeleteBanner = (id, title) => {
     setBannersList((prev) => prev.filter((b) => b.id !== id));

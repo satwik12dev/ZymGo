@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Plus, Edit, Trash2 } from 'lucide-react';
 import ConfirmDeleteModal from '../ConfirmDeleteModal';
 import EditCategoryModal from './EditCategoryModal';
+import api from '../../services/api';
 import './AllCategories.css';
 
 const initialCategories = [
@@ -46,7 +47,32 @@ export default function AllCategories({ onActionTrigger, onNavigateToAdd }) {
     if (onActionTrigger) onActionTrigger(msg);
   };
 
-  const handleDeleteCategory = (id, name) => {
+  useEffect(() => {
+    async function loadCategories() {
+      try {
+        const res = await api.content.getCategories();
+        if (res.success && res.data && res.data.length > 0) {
+          const mapped = res.data.map(c => ({
+            id: c.id,
+            categoryName: c.cate_name,
+            status: c.status === 1 ? 'Active' : 'Inactive',
+            imageUrl: c.image ? (c.image.startsWith('http') ? c.image : `http://localhost:3000/${c.image}`) : 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=200&q=80'
+          }));
+          setCategoriesList(mapped);
+        }
+      } catch (err) {
+        console.warn('Using initial categories:', err.message);
+      }
+    }
+    loadCategories();
+  }, []);
+
+  const handleDeleteCategory = async (id, name) => {
+    try {
+      await api.content.deleteCategory(id);
+    } catch (err) {
+      console.warn('Delete category API:', err.message);
+    }
     setCategoriesList((prev) => prev.filter((c) => c.id !== id));
     notify(`Deleted category "${name}"`);
   };

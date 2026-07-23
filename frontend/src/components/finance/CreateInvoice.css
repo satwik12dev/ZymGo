@@ -1,0 +1,288 @@
+/* CreateInvoice.css - Clean Premium Form Styling */
+
+.create-invoice-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  padding-bottom: 40px;
+}
+
+/* Header */
+.create-invoice-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.create-invoice-header h1 {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+.create-invoice-header .subtitle {
+  font-size: 13px;
+  color: #64748b;
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+/* Hero Header Card */
+.invoice-hero-card {
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+}
+
+.hero-left h2 {
+  font-size: 20px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.hero-left p {
+  font-size: 13.5px;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+.hero-steps-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.step-badge {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 999px;
+}
+
+.step-blue {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+.step-orange {
+  background-color: #ffedd5;
+  color: #c2410c;
+}
+
+.step-green {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+/* Form Main Card */
+.invoice-form-card {
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+}
+
+.form-sections-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-block-card {
+  background-color: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-field-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #334155;
+}
+
+.search-field-row {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.form-input-text,
+.form-select-box {
+  width: 100%;
+  padding: 10px 14px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #0f172a;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-input-text:focus,
+.form-select-box:focus {
+  border-color: #ea580c;
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.12);
+}
+
+.btn-search-navy {
+  height: 42px;
+  padding: 0 24px;
+  background-color: #0f172a;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 13.5px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease;
+}
+
+.btn-search-navy:hover {
+  background-color: #1e293b;
+}
+
+.btn-apply-gray {
+  height: 42px;
+  padding: 0 24px;
+  background-color: #64748b;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 13.5px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease;
+}
+
+.btn-apply-gray:hover {
+  background-color: #475569;
+}
+
+/* 3 Column Calculation Fields Grid */
+.calculations-grid-3col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .calculations-grid-3col {
+    grid-template-columns: 1fr;
+  }
+}
+
+.calc-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.calc-field label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #334155;
+}
+
+/* Summary Box */
+.calculation-summary-box {
+  background-color: #f8fafc;
+  border: 1px solid #f1f5f9;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13.5px;
+  color: #64748b;
+}
+
+.summary-value {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.grand-total-row {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 12px;
+  margin-top: 4px;
+}
+
+.grand-total-label {
+  font-size: 15px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.grand-total-value {
+  font-size: 16px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+/* Footer Actions */
+.invoice-footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.btn-create-invoice-orange {
+  height: 44px;
+  padding: 0 28px;
+  background-color: #ea580c;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.3);
+  transition: background-color 0.15s ease;
+}
+
+.btn-create-invoice-orange:hover {
+  background-color: #c2410c;
+}
+
+.btn-cancel-gray {
+  height: 44px;
+  padding: 0 24px;
+  background-color: #e2e8f0;
+  color: #334155;
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.btn-cancel-gray:hover {
+  background-color: #cbd5e1;
+}

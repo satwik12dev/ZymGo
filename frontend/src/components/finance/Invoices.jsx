@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import api from '../../services/api';
 import { 
   FileText, 
   DollarSign, 
@@ -9,7 +10,9 @@ import {
   Search, 
   Edit2, 
   MoreHorizontal, 
-  X 
+  X,
+  Filter,
+  RotateCcw
 } from 'lucide-react';
 import './Invoices.css';
 
@@ -72,7 +75,7 @@ const initialInvoices = [
   }
 ];
 
-export default function Invoices({ onActionTrigger }) {
+export default function Invoices({ onActionTrigger, onNavigateToCreate }) {
   const [invoicesList, setInvoicesList] = useState(initialInvoices);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('All Status');
@@ -106,23 +109,74 @@ export default function Invoices({ onActionTrigger }) {
     });
   }, [invoicesList, searchQuery, statusFilter]);
 
-  const handleCreateInvoiceSubmit = (e) => {
+  useEffect(() => {
+    async function loadInvoices() {
+      try {
+        const res = await api.finance.getInvoices();
+        if (res.success && res.data && res.data.length > 0) {
+          const mapped = res.data.map(inv => ({
+            id: inv.invoice_number || `INV-${inv.id}`,
+            rawId: inv.id,
+            date: inv.issue_date ? new Date(inv.issue_date).toISOString().split('T')[0] : '2026-07-23',
+            gymId: inv.gym_id || '000001',
+            owner: inv.owner_name || 'Owner',
+            ownerPhone: inv.owner_phone || '—',
+            plan: inv.plan_name || 'Standard Plan',
+            amount: Number(inv.total || inv.subtotal || 0),
+            amountDue: Number(inv.amount_due || inv.total || 0),
+            status: inv.status ? inv.status.charAt(0).toUpperCase() + inv.status.slice(1) : 'Sent',
+            paymentStatus: inv.status === 'paid' ? 'Paid' : 'Pending',
+            paymentHash: inv.payment_hash || null,
+            hasTimeline: true
+          }));
+          setInvoicesList(mapped);
+        }
+      } catch (err) {
+        console.warn('Using default invoices:', err.message);
+      }
+    }
+    loadInvoices();
+  }, []);
+
+  const handleCreateInvoiceSubmit = async (e) => {
     e.preventDefault();
+    const amountVal = Number(newInvoiceData.amount) || 1000;
+    const payload = {
+      gym_id: newInvoiceData.gymId || '1',
+      owner_name: newInvoiceData.owner || 'New Owner',
+      owner_email: 'owner@example.com',
+      issue_date: new Date().toISOString().split('T')[0],
+      subtotal: amountVal,
+      tax: 0,
+      discount: 0,
+      status: 'sent',
+      notes: newInvoiceData.plan
+    };
+
+    let createdInv;
+    try {
+      const res = await api.finance.createInvoice(payload);
+      if (res.data) createdInv = res.data;
+    } catch (err) {
+      console.warn('Create invoice API call error:', err.message);
+    }
+
     const newInv = {
-      id: `INV-2026-000${invoicesList.length + 1}`,
+      id: createdInv?.invoice_number || `INV-2026-000${invoicesList.length + 1}`,
+      rawId: createdInv?.id || Date.now(),
       date: new Date().toISOString().split('T')[0],
       gymId: newInvoiceData.gymId || '000009',
       owner: newInvoiceData.owner || 'New Owner',
       ownerPhone: newInvoiceData.ownerPhone || '9998887770',
       plan: newInvoiceData.plan,
-      amount: Number(newInvoiceData.amount),
-      amountDue: Number(newInvoiceData.amount),
+      amount: amountVal,
+      amountDue: amountVal,
       status: 'Sent',
       paymentStatus: 'Pending',
       paymentHash: 'a1b2c3d4e5f6...',
       hasTimeline: true
     };
-    setInvoicesList([newInv, ...invoicesList]);
+    setInvoicesList((prev) => [newInv, ...prev]);
     notify(`Created new invoice ${newInv.id} for ₹${newInv.amount}`);
     setIsCreateModalOpen(false);
   };
@@ -136,7 +190,7 @@ export default function Invoices({ onActionTrigger }) {
           <p>Billing, payment tracking and quick actions</p>
         </div>
 
-        <button className="btn-create-invoice-orange" onClick={() => setIsCreateModalOpen(true)}>
+        <button className="btn-create-invoice-orange" onClick={() => onNavigateToCreate ? onNavigateToCreate() : setIsCreateModalOpen(true)}>
           <Plus size={16} />
           <span>Create Invoice</span>
         </button>
@@ -220,8 +274,7 @@ export default function Invoices({ onActionTrigger }) {
           </div>
 
           <select 
-            className="audit-select-field"
-            style={{ width: 160 }}
+            className="invoice-select-field"
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
           >
@@ -232,44 +285,56 @@ export default function Invoices({ onActionTrigger }) {
             <option value="Overdue">Overdue</option>
           </select>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#64748b' }}>
-            <span>From</span>
-            <input 
-              type="date" 
-              className="audit-date-input-field" 
-              style={{ width: 150 }}
-              value={fromDate}
-              onChange={(e) => setFromDate(e.target.value)}
-            />
-          </div>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#64748b' }}>
-            <span>To</span>
-            <input 
-              type="date" 
-              className="audit-date-input-field" 
-              style={{ width: 150 }}
-              value={toDate}
-              onChange={(e) => setToDate(e.target.value)}
-            />
+          <div className="invoice-date-range-group">
+            <div className="date-field-wrapper">
+              <span className="date-field-label">From</span>
+              <input 
+                type="date" 
+                className="invoice-date-input" 
+                value={fromDate}
+                onChange={(e) => setFromDate(e.target.value)}
+              />
+            </div>
+            <div className="date-field-wrapper">
+              <span className="date-field-label">To</span>
+              <input 
+                type="date" 
+                className="invoice-date-input" 
+                value={toDate}
+                onChange={(e) => setToDate(e.target.value)}
+              />
+            </div>
           </div>
         </div>
 
         <div className="filter-row-bottom">
           <select 
-            className="audit-select-field"
-            style={{ width: 120 }}
+            className="invoice-select-field per-page-select"
             value={pageSize}
             onChange={(e) => setPageSize(e.target.value)}
           >
-            <option value="20/page">20/page</option>
-            <option value="50/page">50/page</option>
-            <option value="100/page">100/page</option>
+            <option value="20/page">20 / page</option>
+            <option value="50/page">50 / page</option>
+            <option value="100/page">100 / page</option>
           </select>
 
-          <button className="btn-invoice-search-navy" onClick={() => notify(`Filtered ${filteredInvoices.length} invoices`)}>
-            Search
-          </button>
+          <div className="invoice-action-buttons">
+            <button className="btn-apply-filters" onClick={() => notify(`Filtered ${filteredInvoices.length} invoices`)}>
+              <Search size={15} />
+              <span>Search</span>
+            </button>
+
+            <button className="btn-reset-filters" onClick={() => {
+              setSearchQuery('');
+              setStatusFilter('All Status');
+              setFromDate('');
+              setToDate('');
+              notify('Reset invoice filters');
+            }}>
+              <RotateCcw size={15} />
+              <span>Reset</span>
+            </button>
+          </div>
         </div>
       </div>
 

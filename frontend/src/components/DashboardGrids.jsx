@@ -1,7 +1,7 @@
 import React from 'react';
 import { DollarSign, Calendar, Check, ArrowRight } from 'lucide-react';
 
-export default function DashboardGrids({ onViewAll }) {
+const DashboardGrids = React.memo(function DashboardGrids({ onViewAll }) {
   const recentPayments = [
     { id: 1, title: 'N/A', invoice: '#INV-2026-0004', date: '29 Apr 2026', amount: '₹0.00', status: 'Sent' },
     { id: 2, title: 'N/A', invoice: '#INV-2026-0003', date: '13 Jan 2026', amount: '₹0.00', status: 'Sent' },
@@ -149,4 +149,6 @@ export default function DashboardGrids({ onViewAll }) {
       </div>
     </div>
   );
-}
+});
+
+export default DashboardGrids;

@@ -1,20 +1,20 @@
 import React from 'react';
-import { 
-  Plus, 
-  Building, 
-  UserPlus, 
-  Users, 
-  FileText, 
-  BookOpen, 
-  BarChart2, 
-  CreditCard, 
-  FileSpreadsheet, 
-  UserCheck, 
-  ClipboardList, 
-  Upload 
+import {
+  Plus,
+  Building,
+  UserPlus,
+  Users,
+  FileText,
+  BookOpen,
+  BarChart2,
+  CreditCard,
+  FileSpreadsheet,
+  UserIcon,
+  ClipboardList,
+  Upload
 } from 'lucide-react';
 
-export default function QuickActions({ onActionClick }) {
+const QuickActions = React.memo(function QuickActions({ onActionClick }) {
   const actions = [
     { id: 'add_gym', label: 'Add Gym', icon: Plus, colorClass: 'qa-add-gym' },
     { id: 'all_gyms', label: 'All Gyms', icon: Building, colorClass: 'qa-all-gyms' },
@@ -25,13 +25,13 @@ export default function QuickActions({ onActionClick }) {
     { id: 'analytics', label: 'Analytics', icon: BarChart2, colorClass: 'qa-analytics' },
     { id: 'plans', label: 'Plans', icon: CreditCard, colorClass: 'qa-plans' },
     { id: 'reports', label: 'Reports', icon: FileSpreadsheet, colorClass: 'qa-reports' },
-    { id: 'users', label: 'Users', icon: UserCheck, colorClass: 'qa-users' },
+    { id: 'users', label: 'Users', icon: UserIcon, colorClass: 'qa-users' },
     { id: 'audit_log', label: 'Audit Log', icon: ClipboardList, colorClass: 'qa-audit' },
     { id: 'bulk_upload', label: 'Bulk Upload', icon: Upload, colorClass: 'qa-bulk' },
   ];
 
   return (
-    <div className="quick-actions-card">
+    <div id="quick-actions" className="quick-actions-card">
       <h3>Quick Actions</h3>
 
       <div className="actions-grid">
@@ -51,4 +51,6 @@ export default function QuickActions({ onActionClick }) {
       </div>
     </div>
   );
-}
+});
+
+export default QuickActions;

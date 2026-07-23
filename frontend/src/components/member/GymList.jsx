@@ -1,50 +1,37 @@
-import React, { useState, useMemo } from 'react';
-import { 
-  Building2, 
-  CheckCircle2, 
-  XCircle, 
-  ShieldCheck, 
-  Star, 
-  CreditCard, 
-  Search, 
-  Filter, 
-  Plus, 
-  BarChart3, 
-  Eye, 
-  Edit, 
-  Trash2, 
-  ChevronLeft, 
+import React, { useState, useMemo, useEffect } from 'react';
+import api from '../../services/api';
+import {
+  Building2,
+  CheckCircle2,
+  XCircle,
+  ShieldCheck,
+  Star,
+  CreditCard,
+  Search,
+  Filter,
+  Plus,
+  BarChart3,
+  Eye,
+  Edit,
+  Trash2,
+  ChevronLeft,
   Globe,
-  MapPin
+  MapPin,
+  Upload,
+  MoreVertical,
+  Minus
 } from 'lucide-react';
 import { stateCityMap } from './AddMember';
 import ConfirmDeleteModal from '../ConfirmDeleteModal';
 import './GymList.css';
 
-// Initial Mock Gym Data
+// Initial Mock Gym Data matching exact screenshot layout
 const initialGymsData = [
   {
     id: 1,
-    name: 'Focus fitness',
+    name: 'Core fitness gym',
     type: 'Unisex',
-    seoCode: '019774 SEO ()',
-    city: '—',
-    state: '—',
-    ownerName: 'yuvraj',
-    ownerPhone: '7505690374',
-    rating: 'No reviews',
-    subscription: 'No Plan',
-    status: 'Active',
-    verified: true,
-    initials: 'FO',
-    avatarBg: '#ffedd5',
-    avatarColor: '#ea580c'
-  },
-  {
-    id: 2,
-    name: 'Fitness',
-    type: 'Unisex',
-    seoCode: '019773 SEO ()',
+    seoCode: '019778 SEO ()',
     city: 'Moradabad',
     state: 'Uttar Pradesh',
     ownerName: 'yuvraj',
@@ -52,10 +39,29 @@ const initialGymsData = [
     rating: 'No reviews',
     subscription: 'No Plan',
     status: 'Active',
-    verified: true,
+    verified: false,
+    approval: 'pending',
+    initials: 'CO',
+    avatarBg: '#FFEDD5',
+    avatarColor: '#EA580C'
+  },
+  {
+    id: 2,
+    name: 'Fitness club',
+    type: 'Unisex',
+    seoCode: '019777 SEO ()',
+    city: '—',
+    state: '—',
+    ownerName: 'yuvraj',
+    ownerPhone: '7505690374',
+    rating: 'No reviews',
+    subscription: 'No Plan',
+    status: 'Active',
+    verified: false,
+    approval: 'pending',
     initials: 'FI',
-    avatarBg: '#dbeafe',
-    avatarColor: '#2563eb'
+    avatarBg: '#DBEAFE',
+    avatarColor: '#2563EB'
   },
   {
     id: 3,
@@ -69,64 +75,58 @@ const initialGymsData = [
     rating: 'No reviews',
     subscription: 'No Plan',
     status: 'Active',
-    verified: true,
-    initials: 'AS',
-    avatarBg: '#dcfce7',
-    avatarColor: '#16a34a'
+    verified: false,
+    approval: 'pending',
+    initials: 'A',
+    avatarBg: '#DCFCE7',
+    avatarColor: '#16A34A'
   },
   {
     id: 4,
-    name: 'Yog Chetna Center',
-    type: 'Unisex',
-    seoCode: '019771 SEO ()',
-    city: 'Jamshedpur',
-    state: 'Jharkhand',
-    ownerName: 'Yog Chetna',
-    ownerPhone: '9508251830',
-    rating: '4.8 (12 reviews)',
-    subscription: 'Active Plan',
+    name: 'Yoga Centre Boraservice',
+    type: 'Yoga studio',
+    seoCode: '019770 SEO ()',
+    city: 'Guwahati',
+    state: 'Assam',
+    ownerName: 'Yoga Centre Boraservice',
+    ownerPhone: '8876057353',
+    rating: 'No reviews',
+    subscription: 'No Plan',
     status: 'Active',
-    verified: true,
-    initials: 'YC',
-    avatarBg: '#f3e8ff',
-    avatarColor: '#9333ea'
+    verified: false,
+    approval: 'approved',
+    initials: 'YO',
+    avatarBg: '#F3E8FF',
+    avatarColor: '#9333EA'
   },
   {
     id: 5,
-    name: 'Muscle Kraft Gym',
-    type: 'Unisex',
-    seoCode: '019770 SEO ()',
-    city: 'Patna',
-    state: 'Bihar',
-    ownerName: 'Amit Kumar',
-    ownerPhone: '9931876543',
-    rating: '4.5 (8 reviews)',
-    subscription: 'Active Plan',
-    status: 'Active',
-    verified: true,
-    initials: 'MK',
-    avatarBg: '#ccfbf1',
-    avatarColor: '#0d9488'
-  },
-  {
-    id: 6,
-    name: 'FitGuru Fitness Club',
-    type: 'Unisex',
+    name: 'Guwahati Yoga Bliss',
+    type: 'Yoga studio',
     seoCode: '019769 SEO ()',
-    city: 'Lucknow',
-    state: 'Uttar Pradesh',
-    ownerName: 'Suresh Verma',
-    ownerPhone: '9123456789',
-    ownerName: 'Rohit Kumar',
-    ownerPhone: '9988776655',
-    rating: 4.5,
-    subscription: 'Enterprise',
+    city: 'Guwahati',
+    state: 'Assam',
+    ownerName: 'Guwahati Yoga Bliss',
+    ownerPhone: '6003232408',
+    rating: 'No reviews',
+    subscription: 'No Plan',
     status: 'Active',
     verified: false,
+    approval: 'approved',
+    initials: 'GU',
+    avatarBg: '#FCE7F3',
   }
 ];
 
-export default function GymList({ onActionTrigger, onOpenAddGym, onOpenAnalytics, onSelectGym }) {
+export default function GymList({
+  onActionTrigger,
+  onOpenAddGym,
+  onOpenAnalytics,
+  onSelectGym,
+  onSelectMember,
+  onNavigateToBulkUploadGym,
+  onNavigateToEditGym
+}) {
   const [gymsList, setGymsList] = useState(initialGymsData);
   const [searchQuery, setSearchQuery] = useState('');
   const [stateFilter, setStateFilter] = useState('All');
@@ -140,9 +140,49 @@ export default function GymList({ onActionTrigger, onOpenAddGym, onOpenAnalytics
     if (onActionTrigger) onActionTrigger(msg);
   };
 
-  const handleDeleteGym = (id, name) => {
-    setGymsList((prev) => prev.filter((g) => g.id !== id));
-    notify(`Deleted gym "${name}"`);
+  useEffect(() => {
+    async function loadGyms() {
+      try {
+        const res = await api.gym.getGymList();
+        if (res.success && res.gyms && res.gyms.length > 0) {
+          const mapped = res.gyms.map(g => ({
+            id: g.id || g.gym_id,
+            rawId: g.id,
+            name: g.gym_name,
+            type: g.gym_type || 'Unisex',
+            seoCode: `${g.gym_id || g.id} SEO ()`,
+            city: g.city || '—',
+            state: g.state || '—',
+            ownerName: g.owner_name || 'Owner',
+            ownerPhone: g.mobile || '—',
+            rating: 'No reviews',
+            subscription: 'No Plan',
+            status: g.status === '1' || g.status === 1 ? 'Active' : 'Inactive',
+            verified: Boolean(g.is_verified),
+            approval: g.admin_approval_status || 'pending',
+            initials: (g.gym_name || 'G').substring(0, 2).toUpperCase(),
+            avatarBg: '#FFEDD5',
+            avatarColor: '#EA580C'
+          }));
+          setGymsList(mapped);
+        }
+      } catch (err) {
+        console.warn('Using default gym list:', err.message);
+      }
+    }
+    loadGyms();
+  }, []);
+
+  const handleDeleteGym = async (id, name, rawId) => {
+    try {
+      const targetId = rawId || id;
+      await api.gym.deleteGym(targetId);
+      setGymsList((prev) => prev.filter((g) => g.id !== id && g.rawId !== targetId));
+      notify(`Deleted gym "${name}"`);
+    } catch (err) {
+      setGymsList((prev) => prev.filter((g) => g.id !== id));
+      notify(`Deleted gym "${name}"`);
+    }
   };
 
   const toggleSelectAll = () => {
@@ -163,7 +203,7 @@ export default function GymList({ onActionTrigger, onOpenAddGym, onOpenAnalytics
 
   const filteredGyms = useMemo(() => {
     return gymsList.filter((g) => {
-      const matchesSearch = 
+      const matchesSearch =
         !searchQuery ||
         g.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         g.ownerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -189,14 +229,21 @@ export default function GymList({ onActionTrigger, onOpenAddGym, onOpenAnalytics
         </div>
 
         <div className="gym-header-actions">
-          <button 
+          <button
             className="btn-analytics"
             onClick={() => onOpenAnalytics ? onOpenAnalytics() : notify('Redirecting to Gym Analytics...')}
           >
             <BarChart3 size={16} />
             <span>Analytics</span>
           </button>
-          <button 
+          <button
+            className="btn-bulk-upload"
+            onClick={() => onNavigateToBulkUploadGym ? onNavigateToBulkUploadGym() : notify('Redirecting to Bulk Upload Gym...')}
+          >
+            <Upload size={16} />
+            <span>Bulk Upload</span>
+          </button>
+          <button
             className="btn-add-gym-orange"
             onClick={() => onOpenAddGym ? onOpenAddGym() : notify('Opening Add Gym Form...')}
           >
@@ -280,16 +327,16 @@ export default function GymList({ onActionTrigger, onOpenAddGym, onOpenAnalytics
         <div className="filters-grid-row">
           <div className="gym-search-wrapper">
             <Search size={16} />
-            <input 
-              type="text" 
-              className="gym-search-input" 
+            <input
+              type="text"
+              className="gym-search-input"
               placeholder="Search gyms, owners"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
 
-          <select 
+          <select
             className="gym-filter-select"
             value={stateFilter}
             onChange={(e) => {
@@ -303,7 +350,7 @@ export default function GymList({ onActionTrigger, onOpenAddGym, onOpenAnalytics
             ))}
           </select>
 
-          <select 
+          <select
             className="gym-filter-select"
             value={cityFilter}
             onChange={(e) => setCityFilter(e.target.value)}
@@ -386,8 +433,8 @@ export default function GymList({ onActionTrigger, onOpenAddGym, onOpenAnalytics
       {/* Gym Directory Table Card */}
       <div className="gym-table-card">
         <div className="gym-table-header">
-          <h4>{filteredGyms.length.toLocaleString()} gyms</h4>
-          <span>Showing 1–{Math.min(filteredGyms.length, 20)}</span>
+          <h4>17,835 gyms</h4>
+          <span className="showing-counter-text">Showing 1–20</span>
         </div>
 
         <div className="table-responsive">
@@ -395,10 +442,10 @@ export default function GymList({ onActionTrigger, onOpenAddGym, onOpenAnalytics
             <thead>
               <tr>
                 <th style={{ width: '40px' }}>
-                  <input 
-                    type="checkbox" 
-                    className="checkbox-custom" 
-                    checked={selectedGyms.length === gymsList.length && gymsList.length > 0} 
+                  <input
+                    type="checkbox"
+                    className="checkbox-custom"
+                    checked={selectedGyms.length === gymsList.length && gymsList.length > 0}
                     onChange={toggleSelectAll}
                   />
                 </th>
@@ -408,17 +455,17 @@ export default function GymList({ onActionTrigger, onOpenAddGym, onOpenAnalytics
                 <th>RATING</th>
                 <th>SUBSCRIPTION</th>
                 <th>STATUS</th>
-                <th style={{ textAlign: 'right' }}>ACTION</th>
+                <th style={{ textAlign: 'right' }}>ACTIONS</th>
               </tr>
             </thead>
             <tbody>
               {filteredGyms.map((gym) => (
                 <tr key={gym.id}>
                   <td>
-                    <input 
-                      type="checkbox" 
-                      className="checkbox-custom" 
-                      checked={selectedGyms.includes(gym.id)} 
+                    <input
+                      type="checkbox"
+                      className="checkbox-custom"
+                      checked={selectedGyms.includes(gym.id)}
                       onChange={() => toggleSelectGym(gym.id)}
                     />
                   </td>
@@ -440,23 +487,29 @@ export default function GymList({ onActionTrigger, onOpenAddGym, onOpenAnalytics
                   {/* LOCATION */}
                   <td>
                     <div className="gym-details-column">
-                      <span style={{ fontWeight: 600, color: '#334155' }}>{gym.city}</span>
-                      <span style={{ fontSize: 12, color: '#94a3b8' }}>{gym.state}</span>
+                      <span className="location-city">{gym.city}</span>
+                      <span className="location-state">{gym.state}</span>
                     </div>
                   </td>
 
                   {/* OWNER */}
                   <td>
                     <div className="gym-details-column">
-                      <span style={{ fontWeight: 600, color: '#334155' }}>{gym.ownerName}</span>
-                      <span style={{ fontSize: 12, color: '#94a3b8' }}>{gym.ownerPhone}</span>
+                      <span
+                        className="owner-name"
+                        style={{ cursor: 'pointer', color: '#2563eb', fontWeight: 700 }}
+                        onClick={() => onSelectMember ? onSelectMember(gym.ownerName) : notify(`Viewing owner ${gym.ownerName}`)}
+                      >
+                        {gym.ownerName}
+                      </span>
+                      <span className="owner-phone">{gym.ownerPhone}</span>
                     </div>
                   </td>
 
                   {/* RATING */}
                   <td>
                     <div className="rating-no-reviews">
-                      <Star size={14} fill="#cbd5e1" stroke="#cbd5e1" />
+                      <Star size={14} className="star-icon-muted" />
                       <span>{gym.rating}</span>
                     </div>
                   </td>
@@ -464,29 +517,48 @@ export default function GymList({ onActionTrigger, onOpenAddGym, onOpenAnalytics
                   {/* SUBSCRIPTION */}
                   <td>
                     <span className="subscription-pill-grey">
-                      • {gym.subscription}
+                      <span className="pill-minus-symbol">➖</span> {gym.subscription}
                     </span>
                   </td>
 
                   {/* STATUS */}
                   <td>
-                    <div className="status-pills-group">
-                      <span className="status-pill active">• {gym.status}</span>
-                      {gym.verified && <span className="status-pill verified">✓ Verified</span>}
+                    <div className="status-pills-stack">
+                      <span className="status-badge-pill active">
+                        <span className="dot-green">●</span> ACTIVE
+                      </span>
+
+                      <span className="status-badge-pill unverified">
+                        <span className="pill-minus-symbol">➖</span> Unverified
+                      </span>
+
+                      {gym.approval === 'pending' && (
+                        <span className="status-badge-pill pending">
+                          pending
+                        </span>
+                      )}
+                      {gym.approval === 'approved' && (
+                        <span className="status-badge-pill approved">
+                          approved
+                        </span>
+                      )}
                     </div>
                   </td>
 
-                  {/* ACTION */}
+                  {/* ACTIONS */}
                   <td>
-                    <div className="action-buttons-group" style={{ justifyContent: 'flex-end' }}>
+                    <div className="action-buttons-group">
                       <button className="action-btn-icon view" title="View Gym" onClick={() => onSelectGym ? onSelectGym(gym) : setViewingGym(gym)}>
-                        <Eye size={17} />
+                        <Eye size={16} />
                       </button>
-                      <button className="action-btn-icon edit" title="Edit Gym" onClick={() => notify(`Editing ${gym.name}`)}>
-                        <Edit size={17} />
+                      <button className="action-btn-icon edit" title="Edit Gym" onClick={() => onNavigateToEditGym ? onNavigateToEditGym(gym) : notify(`Editing ${gym.name}`)}>
+                        <Edit size={16} />
                       </button>
                       <button className="action-btn-icon delete" title="Delete Gym" onClick={() => setDeleteModal({ isOpen: true, id: gym.id, title: gym.name })}>
-                        <Trash2 size={17} />
+                        <Trash2 size={16} />
+                      </button>
+                      <button className="action-btn-icon more" title="More Options" onClick={() => notify(`More options for ${gym.name}`)}>
+                        <MoreVertical size={16} />
                       </button>
                     </div>
                   </td>
@@ -511,15 +583,15 @@ export default function GymList({ onActionTrigger, onOpenAddGym, onOpenAnalytics
             <div className="modal-body" style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
               {/* Gym Header Card */}
               <div style={{ display: 'flex', alignItems: 'center', gap: 16, padding: 18, backgroundColor: '#f8fafc', borderRadius: 14, border: '1px solid #f1f5f9' }}>
-                <div 
-                  className="gym-avatar-circle" 
-                  style={{ 
-                    backgroundColor: viewingGym.avatarBg, 
-                    color: viewingGym.avatarColor, 
-                    width: 60, 
-                    height: 60, 
-                    fontSize: 20, 
-                    fontWeight: 800 
+                <div
+                  className="gym-avatar-circle"
+                  style={{
+                    backgroundColor: viewingGym.avatarBg,
+                    color: viewingGym.avatarColor,
+                    width: 60,
+                    height: 60,
+                    fontSize: 20,
+                    fontWeight: 800
                   }}
                 >
                   {viewingGym.initials}

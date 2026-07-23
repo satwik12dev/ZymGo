@@ -1,12 +1,20 @@
 import React from 'react';
 import { Plus, UserPlus } from 'lucide-react';
 
-export default function GreetingHeader({ onOpenAddGym, onOpenAddOwner }) {
+const GreetingHeader = React.memo(function GreetingHeader({ currentUser, onOpenAddGym, onOpenAddOwner }) {
+  const name = currentUser?.name || currentUser?.username || 'Kodexive';
+  const currentDateStr = new Date().toLocaleDateString('en-US', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  });
+
   return (
     <div className="greeting-section">
       <div className="greeting-text">
-        <h2>Good morning, Kodexive 👋</h2>
-        <p>Wednesday, 22 July 2026 · Here's what's happening today</p>
+        <h2>Good morning, {name} 👋</h2>
+        <p>{currentDateStr} · Here's what's happening today</p>
       </div>
 
       <div className="greeting-actions">
@@ -22,4 +30,6 @@ export default function GreetingHeader({ onOpenAddGym, onOpenAddOwner }) {
       </div>
     </div>
   );
-}
+});
+
+export default GreetingHeader;

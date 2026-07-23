@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import {
   Zap,
   LayoutDashboard,
@@ -34,9 +34,11 @@ export const menuItems = [
       { title: "Member List", path: "/members/list" },
       { title: "Add Member", path: "/members/add" },
       { title: "Gym List", path: "/members/gyms" },
+      { title: "Add Gym", path: "/members/gyms/add" },
       { title: "City Report", path: "/members/city-report" },
       { title: "Onboarding Performance", path: "/members/performance" },
-      { title: "Bulk Upload Gym", path: "/members/bulk-upload" },
+      { title: "Bulk Upload Members", path: "/members/bulk-upload" },
+      { title: "Bulk Upload Gym", path: "/members/bulk-upload-gym" },
       { title: "Subscription Plans", path: "/members/plans" },
       { title: "Subscription Audit", path: "/members/audit" },
     ],
@@ -127,7 +129,7 @@ export const menuItems = [
   },
 ];
 
-export default function Sidebar({
+const Sidebar = React.memo(function Sidebar({
   activeNav,
   setActiveNav,
   onActionTrigger,
@@ -155,26 +157,27 @@ export default function Sidebar({
     Settings: false
   });
 
-  const toggleSubmenu = (title) => {
+  const toggleSubmenu = useCallback((title) => {
     setOpenSubmenu((prev) => ({
       ...prev,
       [title]: !prev[title],
     }));
-  };
+  }, []);
 
-  const filteredMenuItems = menuItems.filter(item => {
-    if (!searchQuery) return true;
+  const filteredMenuItems = useMemo(() => {
+    if (!searchQuery) return menuItems;
     const query = searchQuery.toLowerCase();
-    const matchesMain = item.title.toLowerCase().includes(query);
-    const matchesSub = item.children?.some(child => child.title.toLowerCase().includes(query));
-    return matchesMain || matchesSub;
-  });
+    return menuItems.filter(item => {
+      const matchesMain = item.title.toLowerCase().includes(query);
+      const matchesSub = item.children?.some(child => child.title.toLowerCase().includes(query));
+      return matchesMain || matchesSub;
+    });
+  }, [searchQuery]);
 
-  const handleParentClick = (item) => {
+  const handleParentClick = useCallback((item) => {
     if (item.children) {
       if (isCollapsed) setIsCollapsed(false);
       toggleSubmenu(item.title);
-      // If clicking Members or Finance or Content parent, switch activeNav to default child
       if (item.title === "Members") {
         setActiveNav("/members/list");
       } else if (item.title === "Finance") {
@@ -186,14 +189,14 @@ export default function Sidebar({
       setActiveNav(item.path);
       if (setIsMobileOpen) setIsMobileOpen(false);
     }
-    onActionTrigger(`Navigated to ${item.title}`);
-  };
+    if (onActionTrigger) onActionTrigger(`Navigated to ${item.title}`);
+  }, [isCollapsed, setIsCollapsed, toggleSubmenu, setActiveNav, setIsMobileOpen, onActionTrigger]);
 
-  const handleChildClick = (parentItem, child) => {
+  const handleChildClick = useCallback((parentItem, child) => {
     setActiveNav(child.path);
     if (setIsMobileOpen) setIsMobileOpen(false);
-    onActionTrigger(`Navigated to ${child.title}`);
-  };
+    if (onActionTrigger) onActionTrigger(`Navigated to ${child.title}`);
+  }, [setActiveNav, setIsMobileOpen, onActionTrigger]);
 
   return (
     <aside className={`app-sidebar ${isCollapsed ? 'collapsed' : ''} ${isMobileOpen ? 'mobile-open' : ''}`}>
@@ -315,20 +318,10 @@ export default function Sidebar({
         {/* User Popover Menu */}
         {showUserMenu && !isCollapsed && (
           <div className="user-menu-popover" onClick={(e) => e.stopPropagation()}>
-            <div className="popover-header">Switch Active Gym</div>
-            <button className="popover-item" onClick={() => { onActionTrigger('Switched to Kodexive Gym'); setShowUserMenu(false); }}>
-              <Building2 size={15} />
-              <span>Kodexive Gym (Active)</span>
-            </button>
-            <button className="popover-item" onClick={() => { onActionTrigger('Switched to MD Fitness Gym'); setShowUserMenu(false); }}>
-              <Building2 size={15} />
-              <span>MD Fitness Gym</span>
-            </button>
-
             <div className="popover-header" style={{ marginTop: 6 }}>Account</div>
             <button className="popover-item" onClick={() => { onActionTrigger('Opened Profile Settings'); setShowUserMenu(false); }}>
               <UserCheck size={15} />
-              <span>Profile Settings</span>
+              <span onClick={() => setActiveNav("/administration/users")}>Profile Settings</span>
             </button>
             <button className="popover-item danger" onClick={() => {
               setShowUserMenu(false);
@@ -339,11 +332,13 @@ export default function Sidebar({
               }
             }}>
               <LogOut size={15} />
-              <span>Sign Out</span>
+              <span>Log Out</span>
             </button>
           </div>
         )}
       </div>
     </aside>
   );
-}
+});
+
+export default Sidebar;

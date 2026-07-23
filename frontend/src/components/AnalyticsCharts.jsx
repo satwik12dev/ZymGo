@@ -26,7 +26,7 @@ const subscriptionData = [
   { name: 'Active', value: 100, color: '#10B981' }
 ];
 
-export default function AnalyticsCharts({ onViewInvoices }) {
+const AnalyticsCharts = React.memo(function AnalyticsCharts({ onViewInvoices }) {
   const formatYAxis = (tickItem) => {
     return `₹${tickItem}`;
   };
@@ -126,4 +126,6 @@ export default function AnalyticsCharts({ onViewInvoices }) {
       </div>
     </div>
   );
-}
+});
+
+export default AnalyticsCharts;

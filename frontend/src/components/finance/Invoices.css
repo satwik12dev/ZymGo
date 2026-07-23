@@ -125,7 +125,7 @@
   box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
 }
 
 .filter-row-top {
@@ -137,8 +137,8 @@
 
 .invoice-search-wrapper {
   position: relative;
-  flex: 2;
-  min-width: 240px;
+  flex: 1.5;
+  min-width: 220px;
 }
 
 .invoice-search-wrapper svg {
@@ -151,36 +151,80 @@
 
 .invoice-search-input {
   width: 100%;
-  padding: 10px 14px 10px 38px;
+  height: 40px;
+  padding: 0 14px 0 40px;
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 10px;
   font-size: 13.5px;
   color: #0f172a;
   outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.invoice-search-input:focus {
+  border-color: #f05223;
+  box-shadow: 0 0 0 3px rgba(240, 82, 35, 0.12);
+}
+
+.invoice-select-field {
+  height: 40px;
+  padding: 0 36px 0 14px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #0f172a;
+  outline: none;
+  cursor: pointer;
+  min-width: 140px;
+}
+
+.invoice-select-field:focus {
+  border-color: #f05223;
+  box-shadow: 0 0 0 3px rgba(240, 82, 35, 0.12);
+}
+
+.invoice-date-range-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.invoice-date-input {
+  height: 40px;
+  padding: 0 12px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 13px;
+  color: #0f172a;
+  outline: none;
+  font-family: inherit;
+}
+
+.invoice-date-input:focus {
+  border-color: #f05223;
+  box-shadow: 0 0 0 3px rgba(240, 82, 35, 0.12);
 }
 
 .filter-row-bottom {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 14px;
+  flex-wrap: wrap;
+  padding-top: 4px;
+  border-top: 1px dashed #f1f5f9;
 }
 
-.btn-invoice-search-navy {
-  background-color: #0f172a;
-  color: #ffffff;
-  font-weight: 700;
-  font-size: 14px;
-  padding: 10px 30px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
-  transition: background-color 0.15s ease;
-}
-
-.btn-invoice-search-navy:hover {
-  background-color: #1e293b;
+.invoice-action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
 }
 
 /* Invoices Table Card */

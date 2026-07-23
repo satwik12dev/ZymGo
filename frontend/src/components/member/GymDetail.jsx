@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 import './GymDetail.css';
 
-export default function GymDetail({ gymData, onBack, onActionTrigger }) {
+export default function GymDetail({ gymData, onBack, onActionTrigger, onEditGym, onCreateInvoice }) {
   const [activeTab, setActiveTab] = useState('Overview');
   const [trusted, setTrusted] = useState(false);
   const [topSearch, setTopSearch] = useState(false);
@@ -65,11 +65,11 @@ export default function GymDetail({ gymData, onBack, onActionTrigger }) {
         </div>
 
         <div className="gym-detail-actions-top">
-          <button className="btn-edit-white" onClick={() => notify(`Editing ${gym.name}...`)}>
+          <button className="btn-edit-white" onClick={() => onEditGym ? onEditGym(gym) : notify(`Editing ${gym.name}...`)}>
             <Edit size={16} />
             <span>Edit</span>
           </button>
-          <button className="btn-new-invoice-orange" onClick={() => notify(`Creating new invoice for ${gym.name}...`)}>
+          <button className="btn-new-invoice-orange" onClick={() => onCreateInvoice ? onCreateInvoice(gym) : notify(`Creating new invoice for ${gym.name}...`)}>
             <Plus size={16} />
             <span>New Invoice</span>
           </button>
@@ -320,15 +320,33 @@ export default function GymDetail({ gymData, onBack, onActionTrigger }) {
 
           {/* Location Card */}
           <div className="detail-card-box">
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-              <MapPin size={18} style={{ color: '#ea580c' }} />
-              <h3 style={{ fontSize: 16, fontWeight: 700, color: '#0f172a' }}>Location</h3>
+            <div className="detail-card-header-row">
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <MapPin size={18} style={{ color: '#ea580c' }} />
+                <h3 style={{ fontSize: 16, fontWeight: 700, color: '#0f172a' }}>Location <span style={{ fontSize: 12, fontWeight: 500, color: '#94a3b8' }}>28.838220, 78.695559</span></h3>
+              </div>
+              <a href="https://maps.google.com" target="_blank" rel="noreferrer" className="link-full-profile" style={{ textDecoration: 'none' }}>
+                Open in Google Maps →
+              </a>
             </div>
 
-            <div className="location-map-box" onClick={() => notify('Opening Google Maps search...')}>
-              <MapPin size={32} style={{ color: '#86efac', marginBottom: 4 }} />
-              <h4>No GPS coordinates saved</h4>
-              <p>Click to search address on Google Maps</p>
+            <div className="map-view-container" style={{ position: 'relative', height: 220, borderRadius: 14, overflow: 'hidden', border: '1px solid #e2e8f0' }}>
+              <iframe
+                title="Gym Location Map"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                src="https://www.openstreetmap.org/export/embed.html?bbox=78.680000%2C28.825000%2C78.710000%2C28.850000&layer=mapnik&marker=28.838220%2C78.695559"
+              ></iframe>
+            </div>
+
+            <div style={{ display: 'flex', gap: 10, marginTop: -6 }}>
+              <button className="btn-edit-white" style={{ fontSize: 12, padding: '6px 14px' }} onClick={() => window.open('https://maps.google.com')}>
+                Google Maps
+              </button>
+              <button className="btn-edit-white" style={{ fontSize: 12, padding: '6px 14px' }} onClick={() => window.open('https://maps.apple.com')}>
+                Apple Maps
+              </button>
             </div>
           </div>
         </div>
@@ -346,10 +364,10 @@ export default function GymDetail({ gymData, onBack, onActionTrigger }) {
               <button className="btn-qa-assign" onClick={() => notify(`Assigned plan to ${gym.name}`)}>
                 Assign Plan
               </button>
-              <button className="btn-qa-invoice" onClick={() => notify(`Creating invoice for ${gym.name}`)}>
+              <button className="btn-qa-invoice" onClick={() => onCreateInvoice ? onCreateInvoice(gym) : notify(`Creating invoice for ${gym.name}`)}>
                 Create Invoice
               </button>
-              <button className="btn-qa-edit-white" onClick={() => notify(`Editing details for ${gym.name}`)}>
+              <button className="btn-qa-edit-white" onClick={() => onEditGym ? onEditGym(gym) : notify(`Editing details for ${gym.name}`)}>
                 Edit Gym Details
               </button>
             </div>
@@ -380,13 +398,13 @@ export default function GymDetail({ gymData, onBack, onActionTrigger }) {
                 <span>Top Search</span>
               </label>
 
-              <div className="form-field-group" style={{ marginTop: 6 }}>
+              <div className="form-field-group" style={{ marginTop: 2 }}>
                 <label style={{ fontSize: 12, fontWeight: 700, color: '#64748b' }}>Approval Status</label>
                 <select 
                   className="gym-filter-select"
                   value={approvalStatus}
                   onChange={(e) => setApprovalStatus(e.target.value)}
-                  style={{ width: '100%' }}
+                  style={{ width: '100%', padding: '8px 12px', borderRadius: 8, border: '1px solid #cbd5e1' }}
                 >
                   <option value="Pending">Pending</option>
                   <option value="Approved">Approved</option>
@@ -399,11 +417,54 @@ export default function GymDetail({ gymData, onBack, onActionTrigger }) {
                 <input 
                   type="text" 
                   className="gym-search-input" 
-                  placeholder="Select Date"
+                  placeholder="mm/dd/yyyy"
                   defaultValue="22 Jul 2026"
-                  style={{ paddingLeft: 14 }}
+                  style={{ paddingLeft: 12, height: 38, borderRadius: 8, border: '1px solid #cbd5e1' }}
                 />
               </div>
+
+              <div className="form-field-group">
+                <label style={{ fontSize: 12, fontWeight: 700, color: '#64748b' }}>Block Date</label>
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <input 
+                    type="text" 
+                    className="gym-search-input" 
+                    placeholder="mm/dd/yyyy"
+                    style={{ flex: 1, paddingLeft: 12, height: 38, borderRadius: 8, border: '1px solid #cbd5e1' }}
+                  />
+                  <button type="button" className="btn-today-red" style={{ height: 38, padding: '0 12px', background: '#fee2e2', color: '#ef4444', border: 'none', borderRadius: 8, fontWeight: 700, fontSize: 12, cursor: 'pointer' }}>
+                    Today
+                  </button>
+                </div>
+              </div>
+
+              <div className="form-field-group">
+                <label style={{ fontSize: 12, fontWeight: 700, color: '#64748b' }}>Admin Remarks</label>
+                <textarea 
+                  rows={3} 
+                  placeholder="Internal notes..."
+                  style={{ width: '100%', padding: 10, borderRadius: 8, border: '1px solid #cbd5e1', fontSize: 13, outline: 'none', fontFamily: 'inherit' }}
+                ></textarea>
+              </div>
+
+              <button 
+                type="button" 
+                style={{ 
+                  width: '100%', 
+                  height: 42, 
+                  backgroundColor: '#0f172a', 
+                  color: '#ffffff', 
+                  fontWeight: 700, 
+                  fontSize: 14, 
+                  borderRadius: 10, 
+                  border: 'none', 
+                  cursor: 'pointer',
+                  marginTop: 6
+                }}
+                onClick={() => notify('Admin controls saved successfully!')}
+              >
+                Save Changes
+              </button>
             </div>
           </div>
         </div>

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import api from '../../services/api';
 import {
   Users as UsersIcon,
   CheckCircle2,
@@ -141,12 +142,42 @@ export default function Users({ onActionTrigger, onNavigateToRoles }) {
     role: 'Select role...'
   });
 
+  useEffect(() => {
+    async function fetchUsers() {
+      try {
+        const res = await api.admin.getUsers();
+        if (res.success && res.data && res.data.length > 0) {
+          const mapped = res.data.map(u => ({
+            id: u.id,
+            name: u.name,
+            username: `@${u.username || u.name.toLowerCase().replace(/\s+/g, '')}`,
+            email: u.email,
+            mobile: u.mobile,
+            allGym: u.allGym || 0,
+            todayGym: u.todayGym || 0,
+            role: u.role_name || u.role || 'Admin',
+            status: u.status === 'blocked' ? 'Blocked' : u.status === 'active' || u.is_active ? 'Active' : 'Inactive',
+            lastLoginDate: u.last_login ? new Date(u.last_login).toLocaleDateString() : 'Never',
+            lastLoginTime: u.last_login ? new Date(u.last_login).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '',
+            initials: (u.name || 'U').substring(0, 2).toUpperCase(),
+            bg: '#DCFCE7',
+            color: '#16A34A'
+          }));
+          setUsersList(mapped);
+        }
+      } catch (err) {
+        console.warn('Using default users list:', err.message);
+      }
+    }
+    fetchUsers();
+  }, []);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleCreateUser = (e) => {
+  const handleCreateUser = async (e) => {
     e.preventDefault();
     if (!formData.name.trim()) {
       if (onActionTrigger) onActionTrigger('Please enter Name');
@@ -161,8 +192,27 @@ export default function Users({ onActionTrigger, onNavigateToRoles }) {
       return;
     }
 
+    const payload = {
+      name: formData.name.trim(),
+      mobile: (formData.mobile && formData.mobile.length === 10) ? formData.mobile : '9876543210',
+      username: formData.username.replace(/^@/, '').trim(),
+      email: formData.email.trim() || `user_${Date.now()}@zymgoo.com`,
+      password: formData.password,
+      role_id: formData.role === 'Super Admin' ? 1 : 2,
+    };
+
+    let createdUser;
+    try {
+      const res = await api.admin.createUser(payload);
+      if (res.data) {
+        createdUser = res.data;
+      }
+    } catch (err) {
+      console.warn('Create user API error, using UI state fallback:', err.message);
+    }
+
     const newUser = {
-      id: Date.now(),
+      id: createdUser?.id || Date.now(),
       name: formData.name,
       username: formData.username.startsWith('@') ? formData.username : `@${formData.username}`,
       email: formData.email || 'admin@example.com',
@@ -178,7 +228,7 @@ export default function Users({ onActionTrigger, onNavigateToRoles }) {
       color: '#16A34A'
     };
 
-    setUsersList([newUser, ...usersList]);
+    setUsersList((prev) => [newUser, ...prev]);
     setFormData({
       name: '',
       mobile: '',
@@ -188,7 +238,9 @@ export default function Users({ onActionTrigger, onNavigateToRoles }) {
       role: 'Select role...'
     });
 
-    if (onActionTrigger) onActionTrigger(`Created admin user "${newUser.name}" successfully!`);
+    if (onActionTrigger) {
+      onActionTrigger(`Created user account for ${newUser.name}`);
+    }
   };
 
   const filteredUsers = usersList.filter((u) => {
@@ -204,7 +256,7 @@ export default function Users({ onActionTrigger, onNavigateToRoles }) {
   });
 
   return (
-    <div className="admin-users-page">
+    <div id="users" className="admin-users-page" style={{ marginTop: 20 }}>
       {/* Hero Banner Header */}
       <div className="admin-users-hero">
         <div className="admin-users-hero-title">
